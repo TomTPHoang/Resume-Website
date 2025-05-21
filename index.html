@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thien Hoang — Resume</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <!-- Main Styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav id="navbar">
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#resume-embed">Resume</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="social">
+        <!-- Profile Picture -->
+        <img 
+          src="https://media.licdn.com/dms/image/v2/D5603AQHG3m3SB3S-6A/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1727535286837?e=1753315200&v=beta&t=CcGA366SWmZmak3pgPT2wFN5IjFuViv5FsTQXuTLKOg" 
+          alt="Thien (Tom) Hoang" 
+          class="profile-pic"
+        >
+
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/thien-hoang-059117236/" target="_blank" aria-label="LinkedIn">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/LinkedIn_icon.svg/2048px-LinkedIn_icon.svg.png" alt="LinkedIn" class="social-icon">
+        </a>
+
+        <!-- GitHub -->
+        <a href="https://github.com/TomTPHoang" target="_blank" aria-label="GitHub">
+          <img src="https://static.vecteezy.com/system/resources/previews/016/833/872/non_2x/github-logo-git-hub-icon-on-white-background-free-vector.jpg" alt="GitHub" class="social-icon">
+        </a>
+
+        <!-- Steam -->
+        <a href="https://steamcommunity.com/profiles/76561198073191273/" target="_blank" aria-label="Steam">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/640px-Steam_icon_logo.svg.png" alt="Steam" class="social-icon">
+        </a>
+      </div>
+
+      <h1>Thien (Tom) Hoang</h1>
+      <p id="subtitle"></p>
+      <a href="resume.pdf" class="download-btn" download>Download My Resume</a>
+    </header>
+
+    <!-- About -->
+    <section id="about" class="reveal">
+      <h2>About Me</h2>
+      <p>Introductory text about your background and passion for game programming.</p>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="reveal">
+      <h2>Skills</h2>
+      <ul>
+        <li data-level="90">C++ (STL, OOP, C++20)</li>
+        <li data-level="80">Unity &amp; Unreal Engine</li>
+        <li data-level="75">Shader Programming (HLSL/GLSL)</li>
+        <li data-level="85">Version Control (Git)</li>
+        <li data-level="70">Problem Solving &amp; Algorithms</li>
+      </ul>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="reveal">
+      <h2>Projects</h2>
+      <div class="filter-tabs">
+        <button data-filter="all" class="active">All</button>
+        <button data-filter="cpp">C++</button>
+        <button data-filter="web">Web</button>
+        <button data-filter="unity">Unity</button>
+      </div>
+      <div class="projects-grid">
+        <div class="project" data-category="cpp">
+          <h3>Game Engine (C++)</h3>
+          <ul>
+            <li>DirectX11, ImGui, Box2D, XAudio2, Raylib</li>
+            <li>Input System: X-Input &amp; Win32 integration</li>
+          </ul>
+        </div>
+        <div class="project" data-category="unity">
+          <h3>Round-based Zombie Game (Unity &amp; C#)</h3>
+          <ul>
+            <li>Shooting mechanics &amp; VFX integration</li>
+            <li>Weapon switching &amp; HUD</li>
+          </ul>
+        </div>
+        <div class="project" data-category="web">
+          <h3>Spotify Song Guesser (Web App)</h3>
+          <ul>
+            <li>Spotify API audio-clip guessing</li>
+            <li>Score tracking &amp; user profiles</li>
+          </ul>
+        </div>
+        <div class="project" data-category="web">
+          <h3>Resume Builder (Full-Stack)</h3>
+          <ul>
+            <li>Dynamic form-driven resume generation</li>
+            <li>PDF export &amp; account management</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resume Embed -->
+    <section id="resume-embed" class="reveal">
+      <h2>My Resume</h2>
+      <div class="embed-container">
+        <iframe id="resume-frame" src="Resume%20Updated%20as%20of%205-21-2025.pdf"></iframe>
+        <div class="pdf-controls">
+          <button id="zoom-in">Zoom In</button>
+          <button id="zoom-out">Zoom Out</button>
+          <a href="Resume Updated as of 5-21-2025.pdf" download>Download PDF</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="reveal">
+      <h2>Contact</h2>
+      <form id="contact-form" novalidate>
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <textarea id="message" rows="4" placeholder="Message" required></textarea>
+        <button type="submit">Send Message</button>
+        <p id="form-error" class="error"></p>
+      </form>
+    </section>
+
+    <!-- Scroll to Top -->
+    <button id="scroll-top" aria-label="Scroll to top">↑</button>
+
+    <footer>For those who come after</footer>
+  </div>
+
+  <!-- Main JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
