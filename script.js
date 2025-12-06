@@ -23,7 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const messageError = document.getElementById("messageError");
     const messageCharCount = document.getElementById("messageCharCount");
 
-    // --- small helpers ---
+    // UI sounds
+    const uiHoverSound = document.getElementById("uiHoverSound");
+    const uiClickSound = document.getElementById("uiClickSound");
+
     const RESUME_PATH = "files/Tom_Hoang_Resume.pdf";
 
     // --- Footer year ---
@@ -31,18 +34,29 @@ document.addEventListener("DOMContentLoaded", () => {
         yearSpan.textContent = new Date().getFullYear();
     }
 
-    // ============ THEME PERSISTENCE ============
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "light" || savedTheme === "dark") {
-        root.setAttribute("data-theme", savedTheme);
-        updateThemeIcon(savedTheme);
-    } else {
-        updateThemeIcon("dark");
-    }
-
+    // ============ THEME PERSISTENCE + AUTO DETECT ============
     function updateThemeIcon(theme) {
         toggleIcon.textContent = theme === "light" ? "☀" : "☾";
     }
+
+    function getPreferredTheme() {
+        const saved = localStorage.getItem("theme");
+        if (saved === "light" || saved === "dark") return saved;
+
+        // Try OS preference first
+        if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+            return "light";
+        }
+
+        // Fallback: time of day
+        const hour = new Date().getHours();
+        // Light from 7AM–7PM, dark otherwise
+        return hour >= 7 && hour < 19 ? "light" : "dark";
+    }
+
+    const initialTheme = getPreferredTheme();
+    root.setAttribute("data-theme", initialTheme);
+    updateThemeIcon(initialTheme);
 
     themeToggle.addEventListener("click", () => {
         const current = root.getAttribute("data-theme") || "dark";
@@ -50,9 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
         root.setAttribute("data-theme", next);
         localStorage.setItem("theme", next);
         updateThemeIcon(next);
+        playClick();
     });
 
-    // ============ #1 TYPEWRITER ROLE ROTATOR ============
+    // ============ TYPEWRITER ROLE ROTATOR ============
     const roleRotatorEl = document.getElementById("roleRotator");
     const roles = [
         "Game Programmer",
@@ -113,6 +128,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     card.style.display = "none";
                 }
             });
+
+            playClick();
         });
     });
 
@@ -128,6 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     scrollTopBtn.addEventListener("click", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
+        playClick();
     });
 
     // ============ REVEAL ON SCROLL ============
@@ -142,9 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         },
-        {
-            threshold: 0.15
-        }
+        { threshold: 0.15 }
     );
 
     revealEls.forEach(el => revealObserver.observe(el));
@@ -159,9 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         },
-        {
-            threshold: 0.3
-        }
+        { threshold: 0.3 }
     );
 
     if (rollingNumbers.length > 0) {
@@ -195,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ============ #5 SKILL XP BAR ANIMATION ============
+    // ============ SKILL XP BAR ANIMATION ============
     const skillObserverTarget = document.querySelector(".skill-xp-grid");
     if (skillObserverTarget) {
         const skillObserver = new IntersectionObserver(
@@ -215,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
         skillObserver.observe(skillObserverTarget);
     }
 
-    // ============ #8 RESUME DOWNLOAD + COUNTER ============
+    // ============ RESUME DOWNLOAD + COUNTER ============
     function loadResumeDownloadCount() {
         const stored = sessionStorage.getItem("resumeDownloadCount");
         const value = stored ? parseInt(stored, 10) || 0 : 0;
@@ -238,19 +252,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (downloadResumeBtn) {
         downloadResumeBtn.addEventListener("click", () => {
-            // Programmatic download
             const link = document.createElement("a");
             link.href = RESUME_PATH;
-            link.download = "Tom_Hoang_Resume.pdf"; // adjust if you rename
+            link.download = "Tom_Hoang_Resume.pdf";
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
 
             incrementResumeDownloadCount();
+            playClick();
         });
     }
 
-    // ============ #12 LAZY-LOADING IMAGES ============
+    // ============ LAZY-LOADING IMAGES ============
     if ("IntersectionObserver" in window && lazyImages.length > 0) {
         const imgObserver = new IntersectionObserver(
             entries => {
@@ -260,9 +274,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         const src = img.getAttribute("data-src");
                         if (src) {
                             img.src = src;
-                            img.addEventListener("load", () => {
-                                img.classList.add("loaded");
-                            }, { once: true });
+                            img.addEventListener(
+                                "load",
+                                () => {
+                                    img.classList.add("loaded");
+                                },
+                                { once: true }
+                            );
                             imgObserver.unobserve(img);
                         }
                     }
@@ -273,7 +291,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         lazyImages.forEach(img => imgObserver.observe(img));
     } else {
-        // Fallback: just set src directly
         lazyImages.forEach(img => {
             const src = img.getAttribute("data-src");
             if (src) {
@@ -291,46 +308,41 @@ document.addEventListener("DOMContentLoaded", () => {
             if (targetEl) {
                 e.preventDefault();
                 targetEl.scrollIntoView({ behavior: "smooth" });
+                playClick();
             }
         });
     });
 
-// ============ #2 SCROLLSPY NAV (top-proximity method) ============
-const sections = Array.from(document.querySelectorAll("main .section"));
+    // ============ SCROLLSPY NAV (top-proximity) ============
+    const sections = Array.from(document.querySelectorAll("main .section"));
 
-function updateScrollspy() {
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-    const headerHeight = 120; // sticky header height
-    const anchorLine = scrollY + headerHeight + 10; // line used as reference
+    function updateScrollspy() {
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const headerHeight = 120;
+        const anchorLine = scrollY + headerHeight + 10;
 
-    let currentId = sections[0].id;
-    let smallestDistance = Infinity;
+        let currentId = sections[0].id;
+        let smallestDistance = Infinity;
 
-    for (const section of sections) {
-        const top = section.offsetTop;
-
-        // Distance between section top and our anchor line
-        const distance = Math.abs(top - anchorLine);
-
-        // Pick the section whose top is closest to anchorLine
-        if (distance < smallestDistance) {
-            smallestDistance = distance;
-            currentId = section.id;
+        for (const section of sections) {
+            const top = section.offsetTop;
+            const distance = Math.abs(top - anchorLine);
+            if (distance < smallestDistance) {
+                smallestDistance = distance;
+                currentId = section.id;
+            }
         }
+
+        navLinks.forEach(link => {
+            const href = link.getAttribute("href") || "";
+            link.classList.toggle("active", href === "#" + currentId);
+        });
     }
 
-    // Update nav highlights
-    navLinks.forEach(link => {
-        const href = link.getAttribute("href") || "";
-        link.classList.toggle("active", href === "#" + currentId);
-    });
-}
+    window.addEventListener("scroll", updateScrollspy);
+    window.addEventListener("load", updateScrollspy);
 
-window.addEventListener("scroll", updateScrollspy);
-window.addEventListener("load", updateScrollspy);
-
-
-    // ============ #3 PROJECT DETAILS MODAL ============
+    // ============ PROJECT DETAILS MODAL ============
     const projectModal = document.getElementById("projectModal");
     const modalTitle = projectModal?.querySelector(".modal-title");
     const modalTech = projectModal?.querySelector(".modal-tech");
@@ -352,9 +364,6 @@ window.addEventListener("load", updateScrollspy);
 
         if (modalLinksContainer) {
             modalLinksContainer.innerHTML = "";
-
-            // If you want per-project external links, you can use data attributes.
-            // For now, just a generic "close" hint or placeholder.
             const hint = document.createElement("p");
             hint.style.fontSize = "0.8rem";
             hint.style.color = "var(--text-muted)";
@@ -364,6 +373,7 @@ window.addEventListener("load", updateScrollspy);
 
         projectModal.classList.add("open");
         projectModal.setAttribute("aria-hidden", "false");
+        playClick();
     }
 
     function closeProjectModal() {
@@ -379,8 +389,14 @@ window.addEventListener("load", updateScrollspy);
         });
     });
 
-    modalCloseBtn?.addEventListener("click", closeProjectModal);
-    modalBackdrop?.addEventListener("click", closeProjectModal);
+    modalCloseBtn?.addEventListener("click", () => {
+        closeProjectModal();
+        playClick();
+    });
+    modalBackdrop?.addEventListener("click", () => {
+        closeProjectModal();
+        playClick();
+    });
 
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") {
@@ -388,7 +404,7 @@ window.addEventListener("load", updateScrollspy);
         }
     });
 
-    // ============ #10 PROJECT HOVER TOOLTIP (DELAYED) ============
+    // ============ PROJECT HOVER TOOLTIP (DELAYED) ============
     projectCards.forEach(card => {
         const tooltipText = card.getAttribute("data-tooltip");
         if (!tooltipText) return;
@@ -404,6 +420,7 @@ window.addEventListener("load", updateScrollspy);
             hoverTimer = setTimeout(() => {
                 tooltip.classList.add("show");
             }, 400);
+            playHover();
         });
 
         card.addEventListener("mouseleave", () => {
@@ -415,9 +432,8 @@ window.addEventListener("load", updateScrollspy);
         });
     });
 
-    // ============ #11 CONTACT FORM VALIDATION + CHAR COUNTER ============
+    // ============ CONTACT FORM VALIDATION + CHAR COUNTER ============
     function validateEmail(value) {
-        // simple email check
         const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return pattern.test(value);
     }
@@ -526,7 +542,6 @@ window.addEventListener("load", updateScrollspy);
             formStatus.textContent = "Message sent! I’ll reply soon.";
             formStatus.style.color = "var(--accent)";
             contactForm.reset();
-            // reset errors + char count
             nameError.textContent = "";
             emailError.textContent = "";
             messageError.textContent = "";
@@ -537,18 +552,15 @@ window.addEventListener("load", updateScrollspy);
         }, 700);
     });
 
-    // ============ #13 STEAM & SPOTIFY NOW PLAYING ============
+    // ============ STEAM & SPOTIFY NOW PLAYING ============
     const steamContainer = document.getElementById("steamNowPlaying");
     const spotifyContainer = document.getElementById("spotifyNowPlaying");
 
-    // --- Steam: GetRecentlyPlayedGames ---
     async function fetchSteamNowPlaying() {
         if (!steamContainer) return;
 
-        // TODO: put your Steam Web API key here (or proxy it from a backend).
-        // WARNING: putting keys directly in frontend code means they are visible to everyone.
         const STEAM_API_KEY = "YOUR_STEAM_API_KEY_HERE";
-        const STEAM_ID = "76561198073191273"; // your Steam64 ID
+        const STEAM_ID = "76561198073191273";
 
         if (!STEAM_API_KEY || STEAM_API_KEY === "YOUR_STEAM_API_KEY_HERE") {
             steamContainer.innerHTML = `
@@ -594,13 +606,9 @@ window.addEventListener("load", updateScrollspy);
         }
     }
 
-    // --- Spotify: Currently Playing ---
     async function fetchSpotifyNowPlaying() {
         if (!spotifyContainer) return;
 
-        // Spotify requires OAuth and a short-lived access token.
-        // Typical flow: get a token via PKCE or from your backend, then call the Web API.
-        // For the static site, you can temporarily paste a token from the Spotify Console for testing.
         const SPOTIFY_ACCESS_TOKEN = "YOUR_SPOTIFY_ACCESS_TOKEN_HERE";
 
         if (!SPOTIFY_ACCESS_TOKEN || SPOTIFY_ACCESS_TOKEN === "YOUR_SPOTIFY_ACCESS_TOKEN_HERE") {
@@ -658,7 +666,7 @@ window.addEventListener("load", updateScrollspy);
     fetchSteamNowPlaying();
     fetchSpotifyNowPlaying();
 
-    // ============ (Optional) Keyboard shortcuts for nav (tiny bonus) ============
+    // ============ Keyboard shortcuts for nav ============
     window.addEventListener("keydown", (e) => {
         if (["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
 
@@ -696,5 +704,40 @@ window.addEventListener("load", updateScrollspy);
         const el = document.getElementById(id);
         if (!el) return;
         el.scrollIntoView({ behavior: "smooth" });
+        playClick();
     }
+
+    // ============ UI SOUND HELPERS ============
+    function playHover() {
+        if (!uiHoverSound) return;
+        try {
+            uiHoverSound.currentTime = 0;
+            uiHoverSound.volume = 0.18;
+            uiHoverSound.play().catch(() => {});
+        } catch { /* ignore */ }
+    }
+
+    function playClick() {
+        if (!uiClickSound) return;
+        try {
+            uiClickSound.currentTime = 0;
+            uiClickSound.volume = 0.22;
+            uiClickSound.play().catch(() => {});
+        } catch { /* ignore */ }
+    }
+
+    // Attach hover/click sounds to key UI elements
+    const soundHoverTargets = document.querySelectorAll(
+        ".btn, .filter-btn, .project-card, .main-nav a, .theme-toggle"
+    );
+    soundHoverTargets.forEach(el => {
+        el.addEventListener("mouseenter", playHover);
+    });
+
+    const soundClickTargets = document.querySelectorAll(
+        ".btn, .filter-btn, .project-details-btn, .main-nav a, #scrollTopBtn"
+    );
+    soundClickTargets.forEach(el => {
+        el.addEventListener("click", playClick);
+    });
 });

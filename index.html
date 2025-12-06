@@ -54,16 +54,25 @@
 
                     <div class="social-row">
                         <!-- Steam -->
-                        <a href="https://steamcommunity.com/profiles/76561198073191273/" target="_blank" rel="noopener" class="social-link steam" title="Steam">
-                            <span class="icon-circle">S</span>
+                        <a href="https://steamcommunity.com/profiles/76561198073191273/" target="_blank" rel="noopener"
+                           class="social-link steam" title="Steam">
+                            <span class="icon-circle">
+                                <img src="images/icon-steam.svg" alt="Steam" class="icon-svg">
+                            </span>
                         </a>
                         <!-- GitHub -->
-                        <a href="https://github.com/TomTPHoang" target="_blank" rel="noopener" class="social-link github" title="GitHub">
-                            <span class="icon-circle">GH</span>
+                        <a href="https://github.com/TomTPHoang" target="_blank" rel="noopener"
+                           class="social-link github" title="GitHub">
+                            <span class="icon-circle">
+                                <img src="images/icon-github.svg" alt="GitHub" class="icon-svg">
+                            </span>
                         </a>
                         <!-- LinkedIn -->
-                        <a href="https://www.linkedin.com/in/thien-hoang-059117236/" target="_blank" rel="noopener" class="social-link linkedin" title="LinkedIn">
-                            <span class="icon-circle">in</span>
+                        <a href="https://www.linkedin.com/in/thien-hoang-059117236/" target="_blank" rel="noopener"
+                           class="social-link linkedin" title="LinkedIn">
+                            <span class="icon-circle">
+                                <img src="images/icon-linkedin.svg" alt="LinkedIn" class="icon-svg">
+                            </span>
                         </a>
                     </div>
                 </div>
@@ -71,7 +80,7 @@
                 <div class="hero-right reveal">
                     <p class="hero-tagline">Computer Science • Game Programming</p>
 
-                    <!-- #1 TYPEWRITER ROLES -->
+                    <!-- TYPEWRITER ROLES -->
                     <p class="hero-roles">
                         <span id="roleRotator"></span><span class="role-cursor">|</span>
                     </p>
@@ -105,7 +114,7 @@
             <div class="section-header reveal">
                 <h2 class="section-title">Skills Loadout</h2>
                 <p class="section-subtitle">
-                    Core disciplines and tools I bring into every project. Think of it as my build, yo.
+                    Core disciplines and tools I bring into every project. Think of it as my build!
                 </p>
             </div>
 
@@ -151,7 +160,7 @@
                 </div>
             </div>
 
-            <!-- #5 SKILL XP BARS -->
+            <!-- SKILL XP BARS -->
             <div class="skill-xp-grid reveal">
                 <div class="skill-xp-row">
                     <div class="skill-xp-label">Unity / C#</div>
@@ -178,6 +187,49 @@
                     </div>
                 </div>
             </div>
+
+            <!-- TECH TREE -->
+            <div class="tech-tree-wrapper reveal">
+                <h3 class="tech-tree-title">Skills Tech Tree</h3>
+                <div class="tech-tree">
+                    <div class="tech-tier">
+                        <div class="tech-node core">
+                            <span class="tech-node-label">Core CS</span>
+                            <span class="tech-node-sub">Data Structures • Algorithms • OS</span>
+                        </div>
+                    </div>
+
+                    <div class="tech-tier">
+                        <div class="tech-node">
+                            <span class="tech-node-label">C++ / Engine</span>
+                            <span class="tech-node-sub">Systems • Memory • Tile / ECS-style</span>
+                        </div>
+                        <div class="tech-node">
+                            <span class="tech-node-label">Unity / C#</span>
+                            <span class="tech-node-sub">Gameplay • UI • Tools</span>
+                        </div>
+                        <div class="tech-node">
+                            <span class="tech-node-label">Web Stack</span>
+                            <span class="tech-node-sub">HTML • CSS • JS • APIs</span>
+                        </div>
+                    </div>
+
+                    <div class="tech-tier">
+                        <div class="tech-node">
+                            <span class="tech-node-label">Input & Systems</span>
+                            <span class="tech-node-sub">State machines • Rebindable input</span>
+                        </div>
+                        <div class="tech-node">
+                            <span class="tech-node-label">Tools & Pipelines</span>
+                            <span class="tech-node-sub">Editors • Debug UI • Profiling</span>
+                        </div>
+                        <div class="tech-node">
+                            <span class="tech-node-label">Networking / Services</span>
+                            <span class="tech-node-sub">REST • Auth • API integration</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- PROJECTS SECTION -->
@@ -198,7 +250,7 @@
             </div>
 
             <div class="projects-grid">
-                <!-- Example project cards: just adjust categories + content -->
+                <!-- Guitar Legend -->
                 <article class="project-card reveal" data-category="game unity csharp" data-tooltip="Click to see more about Guitar Legend.">
                     <div class="project-tag-row">
                         <span class="project-tag">Game</span>
@@ -212,12 +264,17 @@
                     <p class="project-tech">
                         Tech: Unity, C#, Scriptable Objects, Input System
                     </p>
+                    <ul class="project-meta-badges">
+                        <li class="meta-badge meta-badge--role">Role: Gameplay / Systems</li>
+                        <li class="meta-badge meta-badge--team">Team: 4 devs</li>
+                        <li class="meta-badge meta-badge--complexity">Complexity: ★★★★☆</li>
+                    </ul>
                     <div class="project-links">
-                        <!-- replace with real links if you have them -->
                         <button class="project-link project-details-btn" type="button">View Details</button>
                     </div>
                 </article>
 
+                <!-- Zombie Shooter -->
                 <article class="project-card reveal" data-category="game unity csharp" data-tooltip="Round-based FPS zombie survival prototype.">
                     <div class="project-tag-row">
                         <span class="project-tag">Game</span>
@@ -231,11 +288,17 @@
                     <p class="project-tech">
                         Tech: Unity, C#, Animator, VFX Graph
                     </p>
+                    <ul class="project-meta-badges">
+                        <li class="meta-badge meta-badge--role">Role: Weapons & UX</li>
+                        <li class="meta-badge meta-badge--team">Team: 3 devs</li>
+                        <li class="meta-badge meta-badge--complexity">Complexity: ★★★☆☆</li>
+                    </ul>
                     <div class="project-links">
                         <button class="project-link project-details-btn" type="button">View Details</button>
                     </div>
                 </article>
 
+                <!-- Resume Builder -->
                 <article class="project-card reveal" data-category="web tool" data-tooltip="Resume builder web app for clean CVs.">
                     <div class="project-tag-row">
                         <span class="project-tag">Web</span>
@@ -249,11 +312,17 @@
                     <p class="project-tech">
                         Tech: HTML, CSS, JS
                     </p>
+                    <ul class="project-meta-badges">
+                        <li class="meta-badge meta-badge--role">Role: Lead Dev</li>
+                        <li class="meta-badge meta-badge--team">Team: 4 devs</li>
+                        <li class="meta-badge meta-badge--complexity">Complexity: ★★★☆☆</li>
+                    </ul>
                     <div class="project-links">
                         <button class="project-link project-details-btn" type="button">View Details</button>
                     </div>
                 </article>
 
+                <!-- Spotify Song Guesser -->
                 <article class="project-card reveal" data-category="web tool" data-tooltip="Guess songs from snippets using Spotify’s API.">
                     <div class="project-tag-row">
                         <span class="project-tag">Web</span>
@@ -266,11 +335,17 @@
                     <p class="project-tech">
                         Tech: HTML, CSS, JS, Node.js, Spotify Web API
                     </p>
+                    <ul class="project-meta-badges">
+                        <li class="meta-badge meta-badge--role">Role: Full-stack</li>
+                        <li class="meta-badge meta-badge--team">Team: 2 devs</li>
+                        <li class="meta-badge meta-badge--complexity">Complexity: ★★★★☆</li>
+                    </ul>
                     <div class="project-links">
                         <button class="project-link project-details-btn" type="button">View Details</button>
                     </div>
                 </article>
 
+                <!-- Metroidvania Engine -->
                 <article class="project-card reveal" data-category="tool game" data-tooltip="Custom engine prototype for 2D Metroidvania.">
                     <div class="project-tag-row">
                         <span class="project-tag">Tool</span>
@@ -284,6 +359,11 @@
                     <p class="project-tech">
                         Tech: C++, Custom Engine, Tile Systems
                     </p>
+                    <ul class="project-meta-badges">
+                        <li class="meta-badge meta-badge--role">Role: Engine / Systems</li>
+                        <li class="meta-badge meta-badge--team">Team: 3 devs</li>
+                        <li class="meta-badge meta-badge--complexity">Complexity: ★★★★★</li>
+                    </ul>
                     <div class="project-links">
                         <button class="project-link project-details-btn" type="button">View Details</button>
                     </div>
@@ -291,7 +371,7 @@
             </div>
         </section>
 
-        <!-- #9 TIMELINE SECTION -->
+        <!-- TIMELINE SECTION -->
         <section id="timeline" class="section section-dark">
             <div class="section-header reveal">
                 <h2 class="section-title">Progression Timeline</h2>
@@ -336,7 +416,7 @@
             </ul>
         </section>
 
-        <!-- STATS SECTION WITH CASINO-STYLE ROLL -->
+        <!-- STATS SECTION -->
         <section id="stats" class="section section-dark">
             <div class="section-header reveal">
                 <h2 class="section-title">Player Stats</h2>
@@ -376,12 +456,12 @@
             </div>
         </section>
 
-        <!-- #8 RESUME SECTION -->
+        <!-- RESUME SECTION -->
         <section id="resume" class="section">
             <div class="section-header reveal">
                 <h2 class="section-title">Resume</h2>
                 <p class="section-subtitle">
-                    Preview and download my latest resume. The PDF lives under <code>/files</code> in this project.
+                    Preview and download my latest resume.
                 </p>
             </div>
 
@@ -394,7 +474,6 @@
                 </div>
 
                 <div class="resume-preview reveal">
-                    <!-- Update the filename to match your actual resume PDF -->
                     <iframe src="files/Tom_Hoang_Resume.pdf" title="Resume preview" loading="lazy"></iframe>
                     <p class="resume-preview-note">
                         If the preview doesn’t load, you can
@@ -404,7 +483,7 @@
             </div>
         </section>
 
-        <!-- #13 NOW PLAYING SECTION (STEAM + SPOTIFY) -->
+        <!-- NOW PLAYING SECTION -->
         <section id="nowPlaying" class="section section-dark">
             <div class="section-header reveal">
                 <h2 class="section-title">Now Playing & Listening</h2>
@@ -490,7 +569,7 @@
         <p class="footer-sub">Theme inspired by Steam / Valve UI and chiaroscuro vibes.</p>
     </footer>
 
-    <!-- #3 PROJECT DETAILS MODAL -->
+    <!-- PROJECT DETAILS MODAL -->
     <div id="projectModal" class="modal" aria-hidden="true">
         <div class="modal-backdrop"></div>
         <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
@@ -501,6 +580,10 @@
             <div class="modal-links"></div>
         </div>
     </div>
+
+    <!-- UI sounds (put audio files in /audio) -->
+    <audio id="uiHoverSound" src="audio/ui-hover.mp3" preload="auto"></audio>
+    <audio id="uiClickSound" src="audio/ui-click.mp3" preload="auto"></audio>
 
     <script src="script.js"></script>
 </body>

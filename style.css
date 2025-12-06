@@ -15,16 +15,9 @@ html {
     scroll-behavior: smooth;
 }
 
-body {
-    font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #020617;
-    color: #e5e7eb;
-    line-height: 1.5;
-}
+/* ========= Theme Variables ========= */
 
-/* Light / dark themes via data-theme */
-
-:root {
+html {
     --bg-main: #020617;
     --bg-elevated: #0b1120;
     --bg-elevated-soft: #020617;
@@ -38,7 +31,7 @@ body {
     --danger: #f97373;
 }
 
-:root[data-theme="light"] {
+html[data-theme="light"] {
     --bg-main: #f9fafb;
     --bg-elevated: #ffffff;
     --bg-elevated-soft: #f3f4f6;
@@ -54,9 +47,11 @@ body {
 /* ========= Global layout ========= */
 
 body {
-    background: radial-gradient(circle at top, #1e293b 0, #020617 45%);
+    font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.5;
     color: var(--text-main);
     min-height: 100vh;
+    background: radial-gradient(circle at top, #1e293b 0, var(--bg-main) 52%);
 }
 
 main {
@@ -176,7 +171,7 @@ main {
     color: var(--text-main);
 }
 
-/* Scrollspy active state (also used in JS) */
+/* Scrollspy active state */
 .main-nav a.active {
     color: var(--text-main);
 }
@@ -201,6 +196,40 @@ main {
 .hero {
     position: relative;
     margin-top: 2.5rem;
+    overflow: hidden;
+}
+
+/* Shader-ish animated background */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: -100px;
+    background:
+        radial-gradient(circle at 20% 0%, rgba(56, 189, 248, 0.28), transparent 55%),
+        radial-gradient(circle at 80% 10%, rgba(248, 250, 252, 0.12), transparent 60%),
+        repeating-linear-gradient(
+            135deg,
+            rgba(15, 23, 42, 0.52),
+            rgba(15, 23, 42, 0.52) 2px,
+            rgba(15, 23, 42, 0.9) 4px,
+            rgba(15, 23, 42, 0.9) 6px
+        );
+    mix-blend-mode: screen;
+    opacity: 0.6;
+    animation: heroNoise 18s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes heroNoise {
+    0% {
+        transform: translate3d(-20px, -10px, 0) scale(1.02);
+    }
+    50% {
+        transform: translate3d(20px, 10px, 0) scale(1.03);
+    }
+    100% {
+        transform: translate3d(-20px, -10px, 0) scale(1.02);
+    }
 }
 
 .hero-bg-overlay {
@@ -224,6 +253,7 @@ main {
     padding: 2rem 1.8rem;
     border: 1px solid var(--border-subtle);
     box-shadow: var(--shadow-soft);
+    z-index: 1;
 }
 
 .headshot-frame {
@@ -286,6 +316,12 @@ main {
     color: var(--text-muted);
     box-shadow: 0 10px 22px rgba(15, 23, 42, 0.8);
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.icon-svg {
+    width: 18px;
+    height: 18px;
+    display: block;
 }
 
 .social-link:hover .icon-circle {
@@ -460,7 +496,7 @@ main {
     margin-top: 0.2rem;
 }
 
-/* Skill XP bars (extra) */
+/* Skill XP bars */
 
 .skill-xp-grid {
     max-width: 800px;
@@ -500,6 +536,65 @@ main {
     border-radius: inherit;
     background: linear-gradient(90deg, var(--accent), #38bdf8);
     transition: width 0.9s ease-out;
+}
+
+/* Tech Tree */
+
+.tech-tree-wrapper {
+    max-width: 900px;
+    margin: 2.5rem auto 0;
+}
+
+.tech-tree-title {
+    font-family: "Rajdhani", system-ui;
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+}
+
+.tech-tree {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+    position: relative;
+}
+
+.tech-tier {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.tech-node {
+    position: relative;
+    min-width: 200px;
+    max-width: 260px;
+    padding: 0.6rem 0.75rem;
+    border-radius: 0.9rem;
+    background: radial-gradient(circle at 0 0, var(--accent-soft), var(--bg-elevated));
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-subtle);
+}
+
+.tech-node.core {
+    min-width: 260px;
+    text-align: center;
+    background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.25), var(--bg-elevated));
+}
+
+.tech-node-label {
+    display: block;
+    font-family: "Rajdhani", system-ui;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.tech-node-sub {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.18rem;
 }
 
 /* ========= Projects ========= */
@@ -578,7 +673,7 @@ main {
 .project-tech {
     font-size: 0.82rem;
     color: var(--text-muted);
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.4rem;
 }
 
 .project-links {
@@ -597,7 +692,39 @@ main {
     text-decoration: none;
 }
 
-/* Tooltip (JS adds .show) */
+/* Project meta badges */
+
+.project-meta-badges {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.meta-badge {
+    font-size: 0.7rem;
+    border-radius: 999px;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid rgba(148,163,184,0.5);
+    color: var(--text-muted);
+    background: rgba(15,23,42,0.9);
+}
+
+.meta-badge--role {
+    border-color: rgba(56, 189, 248, 0.6);
+}
+
+.meta-badge--team {
+    border-color: rgba(52, 211, 153, 0.5);
+}
+
+.meta-badge--complexity {
+    border-color: rgba(249, 115, 22, 0.6);
+}
+
+/* Tooltip */
 
 .project-tooltip {
     position: absolute;
@@ -969,6 +1096,30 @@ main {
 
 .lazy-img.loaded {
     opacity: 1;
+}
+
+/* ========= Light Theme Tweaks ========= */
+
+html[data-theme="light"] body {
+    background: radial-gradient(circle at top, #e5e7eb 0, var(--bg-main) 60%);
+}
+
+html[data-theme="light"] .site-header {
+    background: linear-gradient(
+        to bottom,
+        rgba(249, 250, 251, 0.96),
+        rgba(249, 250, 251, 0.9),
+        transparent
+    );
+    border-bottom-color: rgba(148, 163, 184, 0.5);
+}
+
+html[data-theme="light"] .hero-inner {
+    background: rgba(255, 255, 255, 0.96);
+}
+
+html[data-theme="light"] .section-dark {
+    background: radial-gradient(circle at top, rgba(209, 213, 219, 0.95), var(--bg-elevated-soft));
 }
 
 /* ========= Responsive ========= */
