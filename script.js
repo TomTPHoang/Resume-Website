@@ -165,48 +165,92 @@ document.addEventListener("DOMContentLoaded", () => {
 
     revealEls.forEach(el => revealObserver.observe(el));
 
-    // ============ ROLLING NUMBERS (#stats) ============
-    const statsObserver = new IntersectionObserver(
-        entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    startRollingNumbers();
-                    statsObserver.disconnect();
-                }
-            });
-        },
-        { threshold: 0.3 }
-    );
+    // ============ ROLLING NUMBERS (#stats) – REIMPLEMENTED 3, 5, 6, 9 ============
+    const statsSection = document.getElementById("stats");
+    const prefersReducedMotion = window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (rollingNumbers.length > 0) {
-        const firstStat = rollingNumbers[0].closest(".stat-card");
-        if (firstStat) {
-            statsObserver.observe(firstStat);
-        }
+    let statsAnimating = false;
+
+    function easeOutCubic(t) {
+        // smooth easing for #5
+        return 1 - Math.pow(1 - t, 3);
     }
 
-    function startRollingNumbers() {
-        rollingNumbers.forEach(span => {
-            const target = parseInt(span.getAttribute("data-target"), 10) || 0;
-            let current = 0;
-            const duration = 1400 + Math.random() * 600;
-            const interval = 30;
-            const steps = duration / interval;
-            const increment = Math.max(1, Math.floor(target / steps));
-            let elapsed = 0;
+    function animateStat(span, index) {
+        const target = parseInt(span.getAttribute("data-target"), 10) || 0;
+
+        if (prefersReducedMotion) {
+            // #9: respect reduced motion, just snap
+            span.textContent = target.toString();
+            return;
+        }
+
+        const totalDuration = 1800;   // all stats same speed (#6)
+        const frameInterval = 16;     // ~60 FPS
+        const totalFrames = Math.round(totalDuration / frameInterval);
+
+        // staggered delay per stat so they start at different times (#6)
+        const startDelay = index * 220; // ms between each stat
+
+        span.textContent = "0";
+
+        setTimeout(() => {
+            let frame = 0;
+            const jitterPhase = 0.4; // first 40% = casino-style jitter (#3)
 
             const timer = setInterval(() => {
-                elapsed += interval;
-                current += increment + Math.floor(Math.random() * 2);
+                frame++;
+                let progress = frame / totalFrames;
+                if (progress >= 1) progress = 1;
 
-                if (elapsed >= duration || current >= target) {
+                if (progress < jitterPhase) {
+                    // casino-style: rapid random values before settling (#3)
+                    const maxRoll = Math.max(target, Math.round(target * 1.3));
+                    span.textContent = Math.floor(Math.random() * maxRoll).toString();
+                } else {
+                    // smooth eased settle into final value (#5)
+                    const localT = (progress - jitterPhase) / (1 - jitterPhase);
+                    const eased = easeOutCubic(localT);
+                    const currentValue = Math.floor(target * eased);
+                    span.textContent = currentValue.toString();
+                }
+
+                if (progress >= 1) {
                     span.textContent = target.toString();
                     clearInterval(timer);
-                } else {
-                    span.textContent = current.toString();
                 }
-            }, interval);
+            }, frameInterval);
+        }, startDelay);
+    }
+
+    function animateAllStats() {
+        if (!rollingNumbers.length) return;
+        if (statsAnimating) return;
+
+        statsAnimating = true;
+        rollingNumbers.forEach((span, index) => {
+            animateStat(span, index);
         });
+    }
+
+    if (statsSection && rollingNumbers.length > 0) {
+        const statsObserver = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // enter viewport → trigger animation
+                        animateAllStats();
+                    } else {
+                        // leave viewport → allow re-trigger (#9)
+                        statsAnimating = false;
+                    }
+                });
+            },
+            { threshold: 0.35 }
+        );
+
+        statsObserver.observe(statsSection);
     }
 
     // ============ SKILL XP BAR ANIMATION ============
