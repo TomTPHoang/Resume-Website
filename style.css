@@ -196,7 +196,8 @@ main {
 .hero {
     position: relative;
     margin-top: 2.5rem;
-    overflow: hidden;
+    border-radius: 1.5rem;   /* NEW: match card radius */
+    overflow: hidden;        /* already here, keeps overlay clipped */
 }
 
 /* Shader-ish animated background */
@@ -234,7 +235,8 @@ main {
 
 .hero-bg-overlay {
     position: absolute;
-    inset: -60px -80px 0;
+    inset: 0;                 /* NEW: fill hero, no negative inset */
+    border-radius: inherit;   /* NEW: follow hero’s rounded corners */
     background:
         radial-gradient(circle at 20% 0%, rgba(56, 189, 248, 0.12), transparent 55%),
         radial-gradient(circle at 90% 10%, rgba(248, 250, 252, 0.1), transparent 56%);
@@ -249,7 +251,7 @@ main {
     gap: 2.5rem;
     align-items: center;
     background: rgba(15, 23, 42, 0.92);
-    border-radius: 1.5rem;
+    border-radius: inherit;   /* UPDATED: inherit from .hero */
     padding: 2rem 1.8rem;
     border: 1px solid var(--border-subtle);
     box-shadow: var(--shadow-soft);
