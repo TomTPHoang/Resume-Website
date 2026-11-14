@@ -14,7 +14,26 @@ window.PORTFOLIO = {
     contact: {
         formspreeId: "",
         email: "",
-        linkedin: "https://www.linkedin.com/in/thien-hoang-059117236/"
+        linkedin: "https://www.linkedin.com/in/thien-hoang-059117236/",
+        github: "https://github.com/TomTPHoang"
+    },
+
+    /* ---------- Analytics (optional) ----------
+       Free, cookie-less visit counting with GoatCounter:
+       1. Sign up at https://www.goatcounter.com and pick a code, e.g. "tomhoang"
+       2. Put that code here. Leave empty to disable. */
+    analytics: {
+        goatcounter: ""
+    },
+
+    /* ---------- Global leaderboards (optional) ----------
+       1. Create a free project at https://supabase.com
+       2. Run docs/leaderboard.sql in its SQL editor
+       3. Paste the Project URL and the "anon public" key below.
+       Leave empty and the leaderboards show this browser's scores only. */
+    leaderboard: {
+        supabaseUrl: "",
+        supabaseAnonKey: ""
     },
 
     /* ---------- Games & projects ----------
@@ -236,6 +255,20 @@ window.PORTFOLIO = {
     /* ---------- Patch notes (newest first) ----------
        type: new | change | fix */
     patchNotes: [
+        {
+            version: "1.2",
+            date: "2026-11-14",
+            title: "The Fog Update",
+            notes: [
+                { type: "new", text: "Horror theme. Every visit now boots into a random theme (lock one in Settings)." },
+                { type: "new", text: "Feel Lab: 4 story rooms, a boss fight, enemies with visible AI states, a daily room, a level editor, ghost replays and speedrun splits." },
+                { type: "new", text: "Beat Lanes: chart editor with shareable links, a daily chart, and a music visualizer." },
+                { type: "new", text: "Playground: pathfinding, particle editor, shader playground and an input-lag tester." },
+                { type: "new", text: "Devlog with live demos, holo trading cards, a site architecture map and leaderboards." },
+                { type: "new", text: "Recruiter view, guided tour, settings, save-file inspector, performance overlay and a hire-me quest." },
+                { type: "new", text: "Boot screen, seasonal events, hidden relics and a secret theme for 100% completion." }
+            ]
+        },
         {
             version: "1.1",
             date: "2026-11-14",

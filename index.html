@@ -7,19 +7,29 @@
     <meta name="description" content="Tom Hoang: gameplay, systems and tools programmer. Unity / C#, C++ engine work, and a playable portfolio.">
     <meta name="theme-color" content="#171a21">
     <meta property="og:title" content="Tom Hoang | Game Programmer">
-    <meta property="og:description" content="Gameplay, systems and tools programmer. See my games, play a rhythm demo, and tune a platformer's physics live.">
+    <meta property="og:description" content="Gameplay, systems and tools programmer. Play the demos, beat the boss, and tune a platformer's physics live.">
     <meta property="og:image" content="images/ThienHoang-480.jpg">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2366c0f4'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='700' font-size='15' text-anchor='middle' fill='%23171a21'%3ETH%3C/text%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script>
+        /* Pick the theme before first paint: random each visit unless locked in Settings. */
         (function () {
-            var d = document.documentElement, t = "steam";
+            var d = document.documentElement, s = {}, retro = false, pool = ["steam", "expedition", "horror"];
             d.classList.add("js");
-            try { var s = JSON.parse(localStorage.getItem("site-theme")); if (s === "expedition") t = s; } catch (e) {}
+            try { s = JSON.parse(localStorage.getItem("th:settings")) || {}; } catch (e) {}
+            try { retro = JSON.parse(localStorage.getItem("th:retro-unlocked")) === true; } catch (e) {}
+            var t = s.themeOnLoad || "random";
+            if (t === "retro" && !retro) t = "random";
+            if (t !== "retro" && pool.indexOf(t) < 0) t = pool[Math.floor(Math.random() * pool.length)];
             d.setAttribute("data-theme", t);
+            if (s.motion === "reduced") d.classList.add("reduce-motion");
+            if (s.textSize) d.style.setProperty("--text-scale", s.textSize);
+            var rec = false;
+            try { rec = /[?&]view=recruiter/.test(location.search) || sessionStorage.getItem("th:recruiter") === "1"; } catch (e) {}
+            if (rec) d.classList.add("recruiter");
         })();
     </script>
 </head>
@@ -37,8 +47,9 @@
             <nav class="nav" id="nav" aria-label="Primary">
                 <a href="#featured">Featured</a>
                 <a href="#library">Library</a>
-                <a href="#play">Play</a>
-                <a href="#lab">Lab</a>
+                <a href="#play" class="fun-only">Play</a>
+                <a href="#lab" class="fun-only">Lab</a>
+                <a href="#playground" class="fun-only">Playground</a>
                 <a href="#skills">Skills</a>
                 <a href="#journey">Journey</a>
                 <a href="#resume">Resume</a>
@@ -46,10 +57,15 @@
             </nav>
 
             <div class="topbar-tools">
-                <div class="theme-switch" role="group" aria-label="Site theme">
-                    <button type="button" data-theme-btn="steam" aria-pressed="true">Steam</button>
-                    <button type="button" data-theme-btn="expedition" aria-pressed="false">Expedition</button>
+                <div class="theme-menu-wrap">
+                    <button type="button" class="tool-btn theme-menu-btn" id="themeMenuBtn" aria-haspopup="true" aria-expanded="false" aria-controls="themeMenu">
+                        <span class="tool-label">Theme</span> <b id="themeName">Steam</b> <span aria-hidden="true">▾</span>
+                    </button>
+                    <div class="theme-menu" id="themeMenu" role="menu" hidden></div>
                 </div>
+                <button type="button" class="tool-btn icon-btn" id="settingsBtn" aria-label="Settings" aria-haspopup="dialog">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>
+                </button>
                 <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
                     <span></span><span></span><span></span>
                 </button>
@@ -61,7 +77,8 @@
         <!-- ================= PROFILE HERO ================= -->
         <section class="profile" id="top">
             <canvas class="profile-canvas" id="heroCanvas" aria-hidden="true"></canvas>
-            <div class="hero-numeral" aria-hidden="true">XXXIII</div>
+            <div class="hero-numeral" aria-hidden="true"><span class="num-exp">XXXIII</span><span class="num-horror">霧</span></div>
+            <button type="button" class="relic relic-hero" data-relic="1" aria-label="A strange glint"><span aria-hidden="true">✧</span></button>
             <div class="container profile-inner">
                 <div class="avatar-wrap">
                     <div class="avatar-frame">
@@ -80,8 +97,12 @@
                     </p>
                     <div class="cta-row">
                         <a class="btn btn-green" href="#featured"><span class="btn-icon" aria-hidden="true">▶</span> View my games</a>
-                        <a class="btn btn-blue" href="#lab">Try the Feel Lab</a>
+                        <a class="btn btn-blue fun-only" href="#lab">Try the Feel Lab</a>
                         <a class="btn btn-ghost" href="files/Tom_Hoang_Resume.pdf" download data-resume>Resume (PDF)</a>
+                    </div>
+                    <div class="hero-links">
+                        <button type="button" class="text-btn" data-recruiter-toggle>Short on time? <b>Recruiter view</b></button>
+                        <button type="button" class="text-btn fun-only" id="tourBtn">Take the 60-second tour</button>
                     </div>
                     <div class="socials">
                         <a href="https://github.com/TomTPHoang" target="_blank" rel="noopener" aria-label="GitHub">
@@ -108,7 +129,7 @@
                         <h2 class="side-title">Looking for</h2>
                         <p>Gameplay, systems or tools programming roles where I can ship features players actually feel.</p>
                     </div>
-                    <div class="side-card side-card--progress">
+                    <div class="side-card side-card--progress fun-only">
                         <div class="side-row">
                             <h2 class="side-title">Achievements</h2>
                             <a href="#achievements" class="side-link"><span id="achCountMini">0</span> / <span id="achTotalMini">0</span></a>
@@ -116,6 +137,28 @@
                         <div class="progress"><span id="achBarMini"></span></div>
                     </div>
                 </aside>
+            </div>
+        </section>
+
+        <!-- ================= RECRUITER VIEW ================= -->
+        <section class="section container" id="recruiter-view" aria-label="Recruiter summary">
+            <div class="recruiter-card">
+                <div class="recruiter-head">
+                    <div>
+                        <p class="feat-kicker">Recruiter view · the 30-second version</p>
+                        <h2 class="recruiter-title">Tom Hoang: gameplay, systems &amp; tools programmer</h2>
+                        <p>CS, Texas A&amp;M University–Corpus Christi. Unity / C#, C++, gameplay systems, engine and tooling work. Open to internships and junior roles.</p>
+                    </div>
+                    <div class="recruiter-actions">
+                        <a class="btn btn-green" href="files/Tom_Hoang_Resume.pdf" download data-resume>Download resume</a>
+                        <a class="btn btn-blue" href="#contact">Contact</a>
+                        <button type="button" class="btn btn-ghost" data-recruiter-toggle>Exit recruiter view</button>
+                    </div>
+                </div>
+                <h3 class="side-title">Top projects</h3>
+                <div class="recruiter-games" id="recruiterGames"></div>
+                <h3 class="side-title">Core skills</h3>
+                <div class="tag-row" id="recruiterSkills"></div>
             </div>
         </section>
 
@@ -177,12 +220,23 @@
             <p class="empty-state" id="libraryEmpty" hidden>No projects match that. Try another filter.</p>
         </section>
 
+        <!-- ================= TRADING CARDS ================= -->
+        <section class="section container fun-only" id="cards">
+            <div class="section-head reveal">
+                <div>
+                    <h2 class="section-title">Card collection</h2>
+                    <p class="section-sub">Holo cards for each game. Tilt them, flip them. The player card has my contact details.</p>
+                </div>
+            </div>
+            <div class="card-grid" id="cardGrid"></div>
+        </section>
+
         <!-- ================= PLAY: BEAT LANES ================= -->
-        <section class="section container" id="play">
+        <section class="section container fun-only" id="play">
             <div class="section-head reveal">
                 <div>
                     <h2 class="section-title">Quick play: Beat Lanes</h2>
-                    <p class="section-sub">A rhythm demo built with vanilla JS, Canvas and Web Audio, a small nod to Guitar Legend.</p>
+                    <p class="section-sub">A rhythm demo built with vanilla JS, Canvas and Web Audio, a small nod to Guitar Legend. Includes a chart editor.</p>
                 </div>
             </div>
 
@@ -190,11 +244,13 @@
                 <div class="game-shell" id="gameShell">
                     <canvas id="rhythmCanvas" aria-label="Rhythm game. Press D, F, J and K, or tap the lanes, when notes reach the line."></canvas>
 
-                    <div class="game-hud" aria-hidden="true">
+                    <div class="game-hud" id="beatHud" aria-hidden="true">
                         <div><span class="hud-label">Score</span><span id="hudScore">0</span></div>
                         <div><span class="hud-label">Combo</span><span id="hudCombo">0</span></div>
                         <div><span class="hud-label">Acc</span><span id="hudAcc">100%</span></div>
                     </div>
+
+                    <div class="chart-toolbar" id="chartToolbar" hidden></div>
 
                     <button class="game-mute" id="gameMute" aria-pressed="false" aria-label="Mute game audio">♪</button>
 
@@ -220,7 +276,7 @@
                     <div class="side-card">
                         <h3 class="side-title">How it works</h3>
                         <ul class="plain-list">
-                            <li>Charts come from seeded patterns per song and difficulty.</li>
+                            <li>Charts come from seeded patterns, or make your own in the editor and share the link.</li>
                             <li>Timing windows: <b class="j-perfect">Perfect</b> ±45ms, <b class="j-great">Great</b> ±90ms, <b class="j-good">Good</b> ±140ms.</li>
                             <li>All audio is synthesized live with Web Audio.</li>
                         </ul>
@@ -230,30 +286,28 @@
         </section>
 
         <!-- ================= GAME FEEL LAB ================= -->
-        <section class="section container" id="lab">
+        <section class="section container fun-only" id="lab">
             <div class="section-head reveal">
                 <div>
                     <h2 class="section-title">Game Feel Lab</h2>
-                    <p class="section-sub">A platformer test room, a nod to my Metroidvania engine. Tweak the physics live and feel the difference. Grab all 8 shards.</p>
+                    <p class="section-sub">A platformer built on my Metroidvania-engine ideas: story rooms, enemies with visible AI, a boss, a daily room and a level editor. Tune the physics live, race your ghost.</p>
                 </div>
             </div>
 
+            <div class="lab-rooms reveal" id="labRooms" role="tablist" aria-label="Choose a room"></div>
+
             <div class="lab-layout reveal">
                 <div class="lab-stage">
-                    <div class="lab-shell" id="labShell" tabindex="0" aria-label="Platformer test room. Arrow keys or A and D to move, Space to jump, Shift to dash, R to reset.">
+                    <div class="lab-shell" id="labShell" tabindex="0" aria-label="Platformer. Arrow keys or A and D to move, Space to jump, Shift to dash, R to restart the room.">
                         <canvas id="labCanvas"></canvas>
                         <div class="game-hud lab-hud" aria-hidden="true">
-                            <div><span class="hud-label">Shards</span><span id="labShards">0/8</span></div>
+                            <div><span class="hud-label" id="labGoalLabel">Shards</span><span id="labShards">0/8</span></div>
                             <div><span class="hud-label">Time</span><span id="labTime">0.00</span></div>
                             <div><span class="hud-label">Best</span><span id="labBest">-</span></div>
+                            <div><span class="hud-label">Deaths</span><span id="labDeaths">0</span></div>
                         </div>
                         <div class="game-overlay" id="labOverlay">
-                            <div class="overlay-card" id="labOverlayCard">
-                                <p class="overlay-kicker">Game Feel Lab</p>
-                                <h3 class="overlay-title">Collect all 8 shards</h3>
-                                <p class="overlay-text">Move <kbd>A</kbd><kbd>D</kbd> · Jump <kbd>Space</kbd> · Dash <kbd>Shift</kbd> · Reset <kbd>R</kbd><br>Walls can be slid down and jumped off.</p>
-                                <button class="btn btn-green" id="labStart" type="button"><span class="btn-icon" aria-hidden="true">▶</span> Play</button>
-                            </div>
+                            <div class="overlay-card" id="labOverlayCard"></div>
                         </div>
                         <div class="touch-pad" id="labTouch">
                             <div class="touch-group">
@@ -266,7 +320,11 @@
                             </div>
                         </div>
                     </div>
-                    <p class="lab-hint">Tip: turn on <b>Debug view</b> to see hitboxes, coyote time and the jump buffer as they happen.</p>
+                    <div class="lab-editor" id="labEditor" hidden></div>
+                    <div class="lab-below">
+                        <div class="splits side-card" id="labSplits"></div>
+                        <div class="ghost-card side-card" id="labGhost"></div>
+                    </div>
                 </div>
 
                 <aside class="lab-panel side-card" aria-label="Physics settings">
@@ -280,6 +338,42 @@
             </div>
         </section>
 
+        <!-- ================= LEADERBOARDS ================= -->
+        <section class="section container fun-only" id="leaderboards">
+            <div class="section-head reveal">
+                <div>
+                    <h2 class="section-title">Leaderboards</h2>
+                    <p class="section-sub" id="lbSub">Top runs for Beat Lanes and the Feel Lab.</p>
+                </div>
+                <label class="select">
+                    <span class="sr-only">Choose leaderboard</span>
+                    <select id="lbBoard"></select>
+                </label>
+            </div>
+            <ol class="lb-list" id="lbList"></ol>
+            <p class="lb-status" id="lbStatus"></p>
+        </section>
+
+        <!-- ================= PLAYGROUND ================= -->
+        <section class="section container fun-only" id="playground">
+            <div class="section-head reveal">
+                <div>
+                    <h2 class="section-title">Playground</h2>
+                    <p class="section-sub">Small tools and tech demos: pathfinding, particles, shaders and input latency.</p>
+                </div>
+            </div>
+            <div class="pg-tabs reveal" role="tablist" aria-label="Playground tools">
+                <button type="button" role="tab" id="pgTab-path" aria-controls="pg-path" aria-selected="true">Pathfinding</button>
+                <button type="button" role="tab" id="pgTab-particles" aria-controls="pg-particles" aria-selected="false" tabindex="-1">Particles</button>
+                <button type="button" role="tab" id="pgTab-shaders" aria-controls="pg-shaders" aria-selected="false" tabindex="-1">Shaders</button>
+                <button type="button" role="tab" id="pgTab-lag" aria-controls="pg-lag" aria-selected="false" tabindex="-1">Input lag</button>
+            </div>
+            <div class="pg-panel reveal" id="pg-path" role="tabpanel" aria-labelledby="pgTab-path"></div>
+            <div class="pg-panel" id="pg-particles" role="tabpanel" aria-labelledby="pgTab-particles" hidden></div>
+            <div class="pg-panel" id="pg-shaders" role="tabpanel" aria-labelledby="pgTab-shaders" hidden></div>
+            <div class="pg-panel" id="pg-lag" role="tabpanel" aria-labelledby="pgTab-lag" hidden></div>
+        </section>
+
         <!-- ================= SKILLS ================= -->
         <section class="section container" id="skills">
             <div class="section-head reveal">
@@ -287,6 +381,7 @@
                     <h2 class="section-title">Skills &amp; tools</h2>
                     <p class="section-sub">Click a skill to see the projects where I used it.</p>
                 </div>
+                <button type="button" class="relic" data-relic="2" aria-label="A strange glint"><span aria-hidden="true">✧</span></button>
             </div>
             <div class="skills-grid" id="skillsGrid"></div>
         </section>
@@ -311,20 +406,34 @@
             </div>
         </section>
 
+        <!-- ================= DEVLOG ================= -->
+        <section class="section container fun-only" id="devlog">
+            <div class="section-head reveal">
+                <div>
+                    <h2 class="section-title">Devlog</h2>
+                    <p class="section-sub">Short write-ups with live demos of the techniques this site uses.</p>
+                </div>
+            </div>
+            <div class="devlog-list" id="devlogList"></div>
+        </section>
+
         <!-- ================= ACHIEVEMENTS ================= -->
-        <section class="section container" id="achievements">
+        <section class="section container fun-only" id="achievements">
             <div class="section-head reveal">
                 <div>
                     <h2 class="section-title">Achievements</h2>
-                    <p class="section-sub">Unlocked by exploring this site. Some are hidden. Progress is saved in your browser.</p>
+                    <p class="section-sub">Unlocked by exploring this site. Some are hidden. Unlock them all for a secret theme.</p>
                 </div>
                 <div class="ach-summary">
-                    <span><b id="achCount">0</b> of <b id="achTotal">0</b> unlocked</span>
+                    <span><b id="achCount">0</b> of <b id="achTotal">0</b> unlocked · Relics <b id="relicCount">0</b>/<span id="relicTotal">6</span></span>
                     <div class="progress"><span id="achBar"></span></div>
                 </div>
             </div>
             <div class="ach-grid" id="achGrid"></div>
-            <button class="text-btn" id="achReset" type="button">Reset progress</button>
+            <div class="ach-actions">
+                <button class="btn btn-blue btn-sm" id="achShare" type="button">Download my progress card</button>
+                <button class="text-btn" id="achReset" type="button">Reset progress</button>
+            </div>
         </section>
 
         <!-- ================= RESUME ================= -->
@@ -350,12 +459,27 @@
             </div>
         </section>
 
+        <!-- ================= UNDER THE HOOD ================= -->
+        <section class="section container fun-only" id="under-the-hood">
+            <div class="section-head reveal">
+                <div>
+                    <h2 class="section-title">Under the hood</h2>
+                    <p class="section-sub">How this site is put together. Click a box.</p>
+                </div>
+                <button type="button" class="relic" data-relic="3" aria-label="A strange glint"><span aria-hidden="true">✧</span></button>
+            </div>
+            <div class="hood reveal">
+                <div class="hood-diagram" id="hoodDiagram"></div>
+                <div class="hood-detail side-card" id="hoodDetail" aria-live="polite"></div>
+            </div>
+        </section>
+
         <!-- ================= PATCH NOTES ================= -->
-        <section class="section container" id="patch-notes">
+        <section class="section container fun-only" id="patch-notes">
             <div class="section-head reveal">
                 <div>
                     <h2 class="section-title">Patch notes</h2>
-                    <p class="section-sub">What's changed on this site.</p>
+                    <p class="section-sub">What's changed on this site. <button type="button" class="relic relic-inline" data-relic="4" aria-label="A strange glint"><span aria-hidden="true">✧</span></button></p>
                 </div>
             </div>
             <div class="patch-list" id="patchList"></div>
@@ -374,7 +498,7 @@
                     <h3 class="side-title">Let's build something</h3>
                     <p>I'm open to internships, junior roles, and collaborations on game or tool projects.</p>
                     <div class="contact-links">
-                        <a href="https://www.linkedin.com/in/thien-hoang-059117236/" target="_blank" rel="noopener">
+                        <a href="https://www.linkedin.com/in/thien-hoang-059117236/" target="_blank" rel="noopener" data-contact-link>
                             <img src="images/icon-linkedin.svg" alt="" width="16" height="16"> LinkedIn
                         </a>
                         <a href="https://github.com/TomTPHoang" target="_blank" rel="noopener">
@@ -409,10 +533,13 @@
 
     <footer class="footer">
         <div class="container footer-inner">
-            <p>© <span id="year"></span> Tom Hoang · <a href="#patch-notes" class="version-badge" id="versionBadge">v1.0</a></p>
+            <p>© <span id="year"></span> Tom Hoang · <a href="#patch-notes" class="version-badge" id="versionBadge">v1.0</a>
+                · <button type="button" class="text-btn footer-btn" id="openSaveInspector">Save data</button>
+                <button type="button" class="relic relic-inline" data-relic="5" aria-label="A strange glint"><span aria-hidden="true">✧</span></button></p>
             <p class="footer-sub">
                 Hand-built with HTML, CSS and vanilla JS.
-                <span class="theme-credit">Expedition theme is a fan homage to Clair Obscur: Expedition 33, not affiliated.</span>
+                <span class="theme-credit credit-expedition">Expedition theme is a fan homage to Clair Obscur: Expedition 33, not affiliated.</span>
+                <span class="theme-credit credit-horror">Horror theme is a fan homage to Silent Hill 2, 3 and f, not affiliated.</span>
             </p>
         </div>
     </footer>
@@ -426,6 +553,34 @@
         </div>
     </div>
 
+    <!-- ================= SETTINGS ================= -->
+    <div class="modal" id="settingsModal" hidden>
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-panel modal-panel--narrow" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" tabindex="-1">
+            <button class="modal-close" data-close aria-label="Close">×</button>
+            <h2 class="gm-title" id="settingsTitle">Settings</h2>
+            <div id="settingsBody" class="settings-body"></div>
+        </div>
+    </div>
+
+    <!-- ================= SAVE INSPECTOR ================= -->
+    <div class="modal" id="saveModal" hidden>
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-panel modal-panel--narrow" role="dialog" aria-modal="true" aria-labelledby="saveTitle" tabindex="-1">
+            <button class="modal-close" data-close aria-label="Close">×</button>
+            <h2 class="gm-title" id="saveTitle">Save file inspector</h2>
+            <p class="gm-note">Everything this site stores lives in your browser's localStorage. Edit it as JSON, export it, or import a save.</p>
+            <textarea id="saveText" class="save-text" spellcheck="false" aria-label="Save data as JSON"></textarea>
+            <p class="form-status" id="saveStatus" role="status"></p>
+            <div class="overlay-actions save-actions">
+                <button type="button" class="btn btn-green btn-sm" id="saveApply">Apply changes</button>
+                <button type="button" class="btn btn-ghost btn-sm" id="saveExport">Export .json</button>
+                <label class="btn btn-ghost btn-sm file-btn">Import<input type="file" id="saveImport" accept="application/json,.json" hidden></label>
+                <button type="button" class="btn btn-ghost btn-sm danger-btn" id="saveWipe">Wipe all</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ================= SECRET CHEAT MENU ================= -->
     <div class="cheat-panel" id="cheatPanel" role="dialog" aria-labelledby="cheatTitle" hidden>
         <div class="cheat-head">
@@ -436,13 +591,26 @@
         <div class="toggle-list" id="cheatList"></div>
     </div>
 
-    <!-- Achievement toasts -->
+    <!-- ================= OVERLAYS ================= -->
+    <div class="quest fun-only" id="quest"></div>
+    <div class="perf" id="perf" hidden aria-hidden="true"></div>
+    <div class="flashlight" id="flashlight" aria-hidden="true"></div>
+    <canvas class="season-canvas" id="seasonCanvas" aria-hidden="true"></canvas>
+    <div class="season-banner" id="seasonBanner" hidden></div>
+    <div class="tour" id="tour" hidden></div>
+    <div class="boot" id="boot" hidden></div>
     <div class="toasts" id="toasts" aria-live="polite"></div>
 
     <script src="data.js"></script>
     <script src="script.js"></script>
     <script src="js/covers.js"></script>
+    <script src="js/leaderboard.js"></script>
     <script src="js/beatlanes.js"></script>
     <script src="js/feel-lab.js"></script>
+    <script src="js/playground.js"></script>
+    <script src="js/devlog.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/extras.js"></script>
+    <script src="js/perf.js"></script>
 </body>
 </html>

@@ -32,8 +32,15 @@
     const rnd01 = (i, salt) => (hash(i * 374761 + salt * 668265) + 1) / 2;
 
     function palette(it) {
-        if (TH.theme && TH.theme.get() === "expedition") {
+        const theme = TH.theme && TH.theme.get();
+        if (theme === "expedition") {
             return { bg1: "#16100d", bg2: "#2b0e12", a: "#d4af6a", b: "#b3242f", c: "#efe4cf", dim: "rgba(212,175,106,0.18)" };
+        }
+        if (theme === "horror") {
+            return { bg1: "#2a2926", bg2: "#0b0b0a", a: "#c9c5bc", b: "#a3171c", c: "#e8e2d4", dim: "rgba(201,197,188,0.16)" };
+        }
+        if (theme === "retro") {
+            return { bg1: "#03140a", bg2: "#010603", a: "#4dff88", b: "#ffd84d", c: "#c8ffd8", dim: "rgba(77,255,136,0.16)" };
         }
         const h = it.hue;
         return {
@@ -114,6 +121,24 @@
         ctx.fillStyle = glow;
         ctx.fillRect(0, 0, W, H);
         (ART[it.art] || ART.web)(ctx, W, H, t, p);
+        const theme = TH.theme && TH.theme.get();
+        if (theme === "horror") {
+            // Drifting fog band + film grain
+            const fy = H * (0.55 + 0.1 * Math.sin(t * 0.3));
+            const fog = ctx.createLinearGradient(0, fy - H * 0.35, 0, fy + H * 0.35);
+            fog.addColorStop(0, "rgba(200,198,190,0)");
+            fog.addColorStop(0.5, "rgba(200,198,190,0.22)");
+            fog.addColorStop(1, "rgba(200,198,190,0)");
+            ctx.fillStyle = fog;
+            ctx.fillRect(0, 0, W, H);
+            for (let i = 0; i < 60; i++) {
+                ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.06})`;
+                ctx.fillRect(Math.random() * W, Math.random() * H, 1, 1);
+            }
+        } else if (theme === "retro") {
+            ctx.fillStyle = "rgba(0,0,0,0.25)";
+            for (let y = 0; y < H; y += 3) ctx.fillRect(0, y, W, 1);
+        }
     }
 
     /* ---------------- art types ---------------- */
