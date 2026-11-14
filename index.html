@@ -1,591 +1,342 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tom Hoang | Game Dev Resume</title>
-    <link rel="stylesheet" href="style.css"/>
-     <link rel="icon" href="data:,"
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tom Hoang | Game Programmer</title>
+    <meta name="description" content="Tom Hoang: gameplay, systems and tools programmer. Unity / C#, C++ engine work, and a playable portfolio.">
+    <meta name="theme-color" content="#171a21">
+    <meta property="og:title" content="Tom Hoang | Game Programmer">
+    <meta property="og:description" content="Gameplay, systems and tools programmer. See my games and play a quick rhythm demo.">
+    <meta property="og:image" content="images/ThienHoang-480.jpg">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2366c0f4'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='700' font-size='15' text-anchor='middle' fill='%23171a21'%3ETH%3C/text%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
-    <!-- Scroll to top button -->
-    <button id="scrollTopBtn" aria-label="Scroll to top">
-        ▲
-    </button>
+    <a class="skip-link" href="#featured">Skip to content</a>
 
-    <header class="site-header">
-        <div class="logo-area">
-            <div class="logo-mark">TH</div>
-            <div class="logo-text">
-                <span class="logo-main">Tom Hoang</span>
-                <span class="logo-sub">Game Programming • Systems • Web</span>
-            </div>
+    <!-- ================= TOP BAR ================= -->
+    <header class="topbar" id="topbar">
+        <div class="container topbar-inner">
+            <a href="#top" class="brand" aria-label="Tom Hoang, back to top">
+                <span class="brand-mark">TH</span>
+                <span class="brand-name">Tom Hoang</span>
+            </a>
+
+            <nav class="nav" id="nav" aria-label="Primary">
+                <a href="#featured">Featured</a>
+                <a href="#library">Library</a>
+                <a href="#play">Play</a>
+                <a href="#skills">Skills</a>
+                <a href="#journey">Journey</a>
+                <a href="#achievements">Achievements</a>
+                <a href="#resume">Resume</a>
+                <a href="#contact" class="nav-cta">Contact</a>
+            </nav>
+
+            <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
         </div>
-
-        <nav class="main-nav">
-            <a href="#hero">Home</a>
-            <a href="#skills">Skills</a>
-            <a href="#projects">Projects</a>
-            <a href="#timeline">Timeline</a>
-            <a href="#stats">Stats</a>
-            <a href="#resume">Resume</a>
-            <a href="#nowPlaying">Now Playing</a>
-            <a href="#contact">Contact</a>
-        </nav>
-
-        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
-            <span class="toggle-icon">☾</span>
-        </button>
     </header>
 
     <main>
-        <!-- HERO SECTION -->
-        <section id="hero" class="hero section">
-            <div class="hero-bg-overlay"></div>
-            <div class="hero-inner">
-                <div class="hero-left reveal">
-                    <div class="headshot-frame">
-                        <!-- Lazy-loaded headshot -->
-                        <img data-src="images/ThienHoang.jpg" alt="Headshot of Tom Hoang" class="headshot-img lazy-img">
-                        <div class="scanline"></div>
+        <!-- ================= PROFILE HERO ================= -->
+        <section class="profile" id="top">
+            <canvas class="profile-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+            <div class="container profile-inner">
+                <div class="avatar-wrap">
+                    <div class="avatar-frame">
+                        <img src="images/ThienHoang-480.jpg" alt="Tom Hoang" width="480" height="480" fetchpriority="high">
                     </div>
+                </div>
 
-                    <div class="social-row">
-                        <!-- Steam -->
-                        <a href="https://steamcommunity.com/profiles/76561198073191273/" target="_blank" rel="noopener"
-                           class="social-link steam" title="Steam">
-                            <span class="icon-circle">
-                                <img src="images/icon-steam.svg" alt="Steam" class="icon-svg">
-                            </span>
+                <div class="profile-main">
+                    <p class="status"><span class="status-dot"></span>Open to work · Internships &amp; junior roles</p>
+                    <h1 class="profile-name">Tom Hoang</h1>
+                    <p class="profile-role"><span id="roleRotator">Gameplay Programmer</span><span class="caret" aria-hidden="true"></span></p>
+                    <p class="profile-summary">
+                        I build gameplay systems, engine tech and tools with a focus on player feel and
+                        maintainable code, from Unity rhythm games to a custom C++ engine.
+                        Scroll down to see my games, or play a quick demo right on this page.
+                    </p>
+                    <div class="cta-row">
+                        <a class="btn btn-green" href="#featured"><span class="btn-icon" aria-hidden="true">▶</span> View my games</a>
+                        <a class="btn btn-blue" href="#play">Play the demo</a>
+                        <a class="btn btn-ghost" href="files/Tom_Hoang_Resume.pdf" download data-resume>Resume (PDF)</a>
+                    </div>
+                    <div class="socials">
+                        <a href="https://github.com/TomTPHoang" target="_blank" rel="noopener" aria-label="GitHub">
+                            <img src="images/icon-github.svg" alt="" width="18" height="18">
                         </a>
-                        <!-- GitHub -->
-                        <a href="https://github.com/TomTPHoang" target="_blank" rel="noopener"
-                           class="social-link github" title="GitHub">
-                            <span class="icon-circle">
-                                <img src="images/icon-github.svg" alt="GitHub" class="icon-svg">
-                            </span>
+                        <a href="https://www.linkedin.com/in/thien-hoang-059117236/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                            <img src="images/icon-linkedin.svg" alt="" width="18" height="18">
                         </a>
-                        <!-- LinkedIn -->
-                        <a href="https://www.linkedin.com/in/thien-hoang-059117236/" target="_blank" rel="noopener"
-                           class="social-link linkedin" title="LinkedIn">
-                            <span class="icon-circle">
-                                <img src="images/icon-linkedin.svg" alt="LinkedIn" class="icon-svg">
-                            </span>
+                        <a href="https://steamcommunity.com/profiles/76561198073191273/" target="_blank" rel="noopener" aria-label="Steam profile">
+                            <img src="images/icon-steam.svg" alt="" width="18" height="18">
                         </a>
                     </div>
                 </div>
 
-                <div class="hero-right reveal">
-                    <p class="hero-tagline">Computer Science • Game Programming</p>
+                <aside class="profile-side">
+                    <div class="side-card">
+                        <h2 class="side-title">Main stack</h2>
+                        <div class="tag-row">
+                            <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">C++</span>
+                            <span class="tag">Gameplay</span><span class="tag">Systems</span><span class="tag">Tools</span>
+                        </div>
+                    </div>
+                    <div class="side-card">
+                        <h2 class="side-title">Looking for</h2>
+                        <p>Gameplay, systems or tools programming roles where I can ship features players actually feel.</p>
+                    </div>
+                    <div class="side-card side-card--progress">
+                        <div class="side-row">
+                            <h2 class="side-title">Achievements</h2>
+                            <a href="#achievements" class="side-link"><span id="achCountMini">0</span> / <span id="achTotalMini">0</span></a>
+                        </div>
+                        <div class="progress"><span id="achBarMini"></span></div>
+                    </div>
+                </aside>
+            </div>
+        </section>
 
-                    <!-- TYPEWRITER ROLES -->
-                    <p class="hero-roles">
-                        <span id="roleRotator"></span><span class="role-cursor">|</span>
-                    </p>
+        <!-- ================= FEATURED CAROUSEL ================= -->
+        <section class="section container" id="featured">
+            <div class="section-head reveal">
+                <div>
+                    <h2 class="section-title">Featured &amp; proudest work</h2>
+                    <p class="section-sub">The games I'd show you first.</p>
+                </div>
+                <div class="carousel-arrows">
+                    <button class="arrow" id="featPrev" aria-label="Previous featured game">‹</button>
+                    <button class="arrow" id="featNext" aria-label="Next featured game">›</button>
+                </div>
+            </div>
 
-                    <h1 class="hero-title">
-                        Systems-Driven <span class="accent-text">Game Developer</span>
-                    </h1>
-                    <p class="hero-body">
-                        I design and implement gameplay systems, tools, and web experiences with a focus
-                        on player feel and maintainable code. From Unity rhythm games to web apps, I
-                        love breaking down complex problems and shipping polished experiences.
-                    </p>
+            <div class="featured reveal" id="featuredCarousel" aria-roledescription="carousel" aria-label="Featured games">
+                <div class="featured-stage" id="featuredStage" aria-live="polite"></div>
+                <div class="featured-dots" id="featuredDots" role="tablist" aria-label="Choose featured game"></div>
+            </div>
+        </section>
 
-                    <div class="hero-cta-row">
-                        <a href="#projects" class="btn primary">View Projects</a>
-                        <a href="#contact" class="btn ghost">Contact Me</a>
+        <!-- ================= LIBRARY ================= -->
+        <section class="section container" id="library">
+            <div class="section-head reveal">
+                <div>
+                    <h2 class="section-title">Library <span class="count-pill" id="libraryCount">0</span></h2>
+                    <p class="section-sub">Every game and project. Open one to see its page.</p>
+                </div>
+            </div>
+
+            <div class="library-toolbar reveal">
+                <div class="chips" id="libraryFilters" role="group" aria-label="Filter projects">
+                    <button class="chip active" data-filter="all" aria-pressed="true">All</button>
+                    <button class="chip" data-filter="game" aria-pressed="false">Games</button>
+                    <button class="chip" data-filter="unity" aria-pressed="false">Unity</button>
+                    <button class="chip" data-filter="engine" aria-pressed="false">C++ / Engine</button>
+                    <button class="chip" data-filter="web" aria-pressed="false">Web &amp; Tools</button>
+                </div>
+                <div class="toolbar-right">
+                    <label class="search">
+                        <span class="sr-only">Search projects</span>
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                        <input type="search" id="librarySearch" placeholder="Search…" autocomplete="off">
+                    </label>
+                    <label class="select">
+                        <span class="sr-only">Sort projects</span>
+                        <select id="librarySort">
+                            <option value="featured">Featured first</option>
+                            <option value="newest">Newest</option>
+                            <option value="az">A – Z</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <div class="library-grid" id="libraryGrid"></div>
+            <p class="empty-state" id="libraryEmpty" hidden>No projects match that. Try another filter.</p>
+        </section>
+
+        <!-- ================= PLAY: RHYTHM DEMO ================= -->
+        <section class="section container" id="play">
+            <div class="section-head reveal">
+                <div>
+                    <h2 class="section-title">Quick play: Beat Lanes</h2>
+                    <p class="section-sub">A 30-second rhythm demo built with vanilla JS, Canvas and Web Audio, a small nod to Guitar Legend.</p>
+                </div>
+            </div>
+
+            <div class="play-layout reveal">
+                <div class="game-shell" id="gameShell">
+                    <canvas id="rhythmCanvas" aria-label="Rhythm game. Press D, F, J and K, or tap the lanes, when notes reach the line."></canvas>
+
+                    <div class="game-hud" aria-hidden="true">
+                        <div><span class="hud-label">Score</span><span id="hudScore">0</span></div>
+                        <div><span class="hud-label">Combo</span><span id="hudCombo">0</span></div>
+                        <div><span class="hud-label">Acc</span><span id="hudAcc">100%</span></div>
                     </div>
 
-                    <div class="hero-pill-row">
-                        <span class="pill">Unity / C#</span>
-                        <span class="pill">C++ / Graphics</span>
-                        <span class="pill">Web (HTML/CSS/JS)</span>
-                        <span class="pill">Game Tools & Systems</span>
+                    <button class="game-mute" id="gameMute" aria-pressed="false" aria-label="Mute game audio">♪</button>
+
+                    <div class="game-overlay" id="gameOverlay">
+                        <div class="overlay-card" id="overlayCard">
+                            <p class="overlay-kicker">Beat Lanes</p>
+                            <h3 class="overlay-title">Hit the notes on the line</h3>
+                            <p class="overlay-text">Keys <kbd>D</kbd> <kbd>F</kbd> <kbd>J</kbd> <kbd>K</kbd>, or tap the lanes.</p>
+                            <button class="btn btn-green" id="gameStart"><span class="btn-icon" aria-hidden="true">▶</span> Play</button>
+                        </div>
                     </div>
+                </div>
+
+                <aside class="play-side">
+                    <div class="side-card">
+                        <h3 class="side-title">How it works</h3>
+                        <ul class="plain-list">
+                            <li>Charts are generated from a seeded pattern that gets denser over time.</li>
+                            <li>Hits are judged against timing windows: <b class="j-perfect">Perfect</b> ±45ms, <b class="j-great">Great</b> ±90ms, <b class="j-good">Good</b> ±140ms.</li>
+                            <li>The backing beat is synthesized with Web Audio, so there are no audio files.</li>
+                        </ul>
+                    </div>
+                    <div class="side-card">
+                        <h3 class="side-title">Your best</h3>
+                        <p class="best-line"><span id="bestScore">-</span> <span class="best-grade" id="bestGrade"></span></p>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- ================= SKILLS ================= -->
+        <section class="section container" id="skills">
+            <div class="section-head reveal">
+                <div>
+                    <h2 class="section-title">Skills &amp; tools</h2>
+                    <p class="section-sub">What I bring to a team.</p>
+                </div>
+            </div>
+            <div class="skills-grid" id="skillsGrid"></div>
+        </section>
+
+        <!-- ================= JOURNEY ================= -->
+        <section class="section container" id="journey">
+            <div class="section-head reveal">
+                <div>
+                    <h2 class="section-title">Journey</h2>
+                    <p class="section-sub">Recent activity, newest first.</p>
+                </div>
+            </div>
+            <ol class="journey" id="journeyList"></ol>
+        </section>
+
+        <!-- ================= ACHIEVEMENTS ================= -->
+        <section class="section container" id="achievements">
+            <div class="section-head reveal">
+                <div>
+                    <h2 class="section-title">Achievements</h2>
+                    <p class="section-sub">Unlocked by exploring this site. Progress is saved in your browser.</p>
+                </div>
+                <div class="ach-summary">
+                    <span><b id="achCount">0</b> of <b id="achTotal">0</b> unlocked</span>
+                    <div class="progress"><span id="achBar"></span></div>
+                </div>
+            </div>
+            <div class="ach-grid" id="achGrid"></div>
+            <button class="text-btn" id="achReset" type="button">Reset progress</button>
+        </section>
+
+        <!-- ================= RESUME ================= -->
+        <section class="section container" id="resume">
+            <div class="section-head reveal">
+                <div>
+                    <h2 class="section-title">Resume</h2>
+                    <p class="section-sub">The one-page version.</p>
+                </div>
+            </div>
+            <div class="resume-layout reveal">
+                <div class="side-card resume-card">
+                    <h3 class="side-title">Tom Hoang · Resume</h3>
+                    <p>Computer Science, Texas A&amp;M University–Corpus Christi. Gameplay, systems and tools programming.</p>
+                    <div class="cta-col">
+                        <a class="btn btn-green" href="files/Tom_Hoang_Resume.pdf" download data-resume>Download PDF</a>
+                        <a class="btn btn-ghost" href="files/Tom_Hoang_Resume.pdf" target="_blank" rel="noopener" data-resume>Open in new tab</a>
+                    </div>
+                </div>
+                <div class="resume-preview">
+                    <iframe src="files/Tom_Hoang_Resume.pdf#view=FitH" title="Resume preview" loading="lazy"></iframe>
                 </div>
             </div>
         </section>
 
-        <!-- SKILLS SECTION -->
-        <section id="skills" class="section">
-            <div class="section-header reveal">
-                <h2 class="section-title">Skills Loadout</h2>
-                <p class="section-subtitle">
-                    Core disciplines and tools I bring into every project. Think of it as my build!
-                </p>
-            </div>
-
-            <div class="skills-grid">
-                <div class="skill-card reveal">
-                    <h3>Game Programming</h3>
-                    <ul>
-                        <li>Unity / C# gameplay, UI, tools</li>
-                        <li>Input systems, state machines</li>
-                        <li>Level & rhythm systems</li>
-                        <li>Profiling & optimization basics</li>
-                    </ul>
-                </div>
-
-                <div class="skill-card reveal">
-                    <h3>Engine & Systems</h3>
-                    <ul>
-                        <li>C++ fundamentals & data structures</li>
-                        <li>Rendering & basic graphics pipelines</li>
-                        <li>Scripting integrations & tools</li>
-                        <li>Debugging and testing</li>
-                    </ul>
-                </div>
-
-                <div class="skill-card reveal">
-                    <h3>Web & Tools</h3>
-                    <ul>
-                        <li>HTML, CSS, JavaScript</li>
-                        <li>Responsive layouts & UI polish</li>
-                        <li>Basic REST / JSON integration</li>
-                        <li>Tool UIs for dev workflows</li>
-                    </ul>
-                </div>
-
-                <div class="skill-card reveal">
-                    <h3>Soft Skills</h3>
-                    <ul>
-                        <li>Team communication & collaboration</li>
-                        <li>Version control with Git</li>
-                        <li>Technical documentation</li>
-                        <li>Rapid prototyping</li>
-                    </ul>
+        <!-- ================= CONTACT ================= -->
+        <section class="section container" id="contact">
+            <div class="section-head reveal">
+                <div>
+                    <h2 class="section-title">Contact</h2>
+                    <p class="section-sub">Hiring, collabs, or just want to talk games? I'll get back to you.</p>
                 </div>
             </div>
-
-            <!-- SKILL XP BARS -->
-            <div class="skill-xp-grid reveal">
-                <div class="skill-xp-row">
-                    <div class="skill-xp-label">Unity / C#</div>
-                    <div class="skill-xp-bar">
-                        <span class="skill-xp-fill" data-percent="90"></span>
-                    </div>
-                </div>
-                <div class="skill-xp-row">
-                    <div class="skill-xp-label">C++ / Engine & Systems</div>
-                    <div class="skill-xp-bar">
-                        <span class="skill-xp-fill" data-percent="80"></span>
-                    </div>
-                </div>
-                <div class="skill-xp-row">
-                    <div class="skill-xp-label">Web (HTML/CSS/JS)</div>
-                    <div class="skill-xp-bar">
-                        <span class="skill-xp-fill" data-percent="75"></span>
-                    </div>
-                </div>
-                <div class="skill-xp-row">
-                    <div class="skill-xp-label">Teamwork & Communication</div>
-                    <div class="skill-xp-bar">
-                        <span class="skill-xp-fill" data-percent="85"></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TECH TREE -->
-            <div class="tech-tree-wrapper reveal">
-                <h3 class="tech-tree-title">Skills Tech Tree</h3>
-                <div class="tech-tree">
-                    <div class="tech-tier">
-                        <div class="tech-node core">
-                            <span class="tech-node-label">Core CS</span>
-                            <span class="tech-node-sub">Data Structures • Algorithms • OS</span>
-                        </div>
-                    </div>
-
-                    <div class="tech-tier">
-                        <div class="tech-node">
-                            <span class="tech-node-label">C++ / Engine</span>
-                            <span class="tech-node-sub">Systems • Memory • Tile / ECS-style</span>
-                        </div>
-                        <div class="tech-node">
-                            <span class="tech-node-label">Unity / C#</span>
-                            <span class="tech-node-sub">Gameplay • UI • Tools</span>
-                        </div>
-                        <div class="tech-node">
-                            <span class="tech-node-label">Web Stack</span>
-                            <span class="tech-node-sub">HTML • CSS • JS • APIs</span>
-                        </div>
-                    </div>
-
-                    <div class="tech-tier">
-                        <div class="tech-node">
-                            <span class="tech-node-label">Input & Systems</span>
-                            <span class="tech-node-sub">State machines • Rebindable input</span>
-                        </div>
-                        <div class="tech-node">
-                            <span class="tech-node-label">Tools & Pipelines</span>
-                            <span class="tech-node-sub">Editors • Debug UI • Profiling</span>
-                        </div>
-                        <div class="tech-node">
-                            <span class="tech-node-label">Networking / Services</span>
-                            <span class="tech-node-sub">REST • Auth • API integration</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- PROJECTS SECTION -->
-        <section id="projects" class="section">
-            <div class="section-header reveal">
-                <h2 class="section-title">Projects Library</h2>
-                <p class="section-subtitle">
-                    Filterable list of things I’ve shipped or prototyped. Pick your flavor.
-                </p>
-
-                <div class="project-filters">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="game">Games</button>
-                    <button class="filter-btn" data-filter="unity">Unity / C#</button>
-                    <button class="filter-btn" data-filter="web">Websites</button>
-                    <button class="filter-btn" data-filter="tool">Tools / Systems</button>
-                </div>
-            </div>
-
-            <div class="projects-grid">
-                <!-- Guitar Legend -->
-                <article class="project-card reveal" data-category="game unity csharp" data-tooltip="Click to see more about Guitar Legend.">
-                    <div class="project-tag-row">
-                        <span class="project-tag">Game</span>
-                        <span class="project-tag">Unity</span>
-                    </div>
-                    <h3 class="project-title">Guitar Legend (Rhythm Game)</h3>
-                    <p class="project-desc">
-                        A Unity-based rhythm game inspired by Guitar Hero and osu!, featuring custom charts,
-                        multiple input types, and results screens with animated scoring.
-                    </p>
-                    <p class="project-tech">
-                        Tech: Unity, C#, Scriptable Objects, Input System
-                    </p>
-                    <ul class="project-meta-badges">
-                        <li class="meta-badge meta-badge--role">Role: Gameplay / Systems</li>
-                        <li class="meta-badge meta-badge--team">Team: 4 devs</li>
-                        <li class="meta-badge meta-badge--complexity">Complexity: ★★★★☆</li>
-                    </ul>
-                    <div class="project-links">
-                        <button class="project-link project-details-btn" type="button">View Details</button>
-                    </div>
-                </article>
-
-                <!-- Zombie Shooter -->
-                <article class="project-card reveal" data-category="game unity csharp" data-tooltip="Round-based FPS zombie survival prototype.">
-                    <div class="project-tag-row">
-                        <span class="project-tag">Game</span>
-                        <span class="project-tag">Unity</span>
-                    </div>
-                    <h3 class="project-title">Round-Based Zombie Shooter</h3>
-                    <p class="project-desc">
-                        First-person zombie game featuring weapon swapping, reload systems, hit markers,
-                        VFX, and responsive UI for ammo and health.
-                    </p>
-                    <p class="project-tech">
-                        Tech: Unity, C#, Animator, VFX Graph
-                    </p>
-                    <ul class="project-meta-badges">
-                        <li class="meta-badge meta-badge--role">Role: Weapons & UX</li>
-                        <li class="meta-badge meta-badge--team">Team: 3 devs</li>
-                        <li class="meta-badge meta-badge--complexity">Complexity: ★★★☆☆</li>
-                    </ul>
-                    <div class="project-links">
-                        <button class="project-link project-details-btn" type="button">View Details</button>
-                    </div>
-                </article>
-
-                <!-- Resume Builder -->
-                <article class="project-card reveal" data-category="web tool" data-tooltip="Resume builder web app for clean CVs.">
-                    <div class="project-tag-row">
-                        <span class="project-tag">Web</span>
-                        <span class="project-tag">Tool</span>
-                    </div>
-                    <h3 class="project-title">Resume Builder Web App</h3>
-                    <p class="project-desc">
-                        A resume generator that formats user input into a job-ready resume, with custom
-                        templates and live preview.
-                    </p>
-                    <p class="project-tech">
-                        Tech: HTML, CSS, JS
-                    </p>
-                    <ul class="project-meta-badges">
-                        <li class="meta-badge meta-badge--role">Role: Lead Dev</li>
-                        <li class="meta-badge meta-badge--team">Team: 4 devs</li>
-                        <li class="meta-badge meta-badge--complexity">Complexity: ★★★☆☆</li>
-                    </ul>
-                    <div class="project-links">
-                        <button class="project-link project-details-btn" type="button">View Details</button>
-                    </div>
-                </article>
-
-                <!-- Spotify Song Guesser -->
-                <article class="project-card reveal" data-category="web tool" data-tooltip="Guess songs from snippets using Spotify’s API.">
-                    <div class="project-tag-row">
-                        <span class="project-tag">Web</span>
-                    </div>
-                    <h3 class="project-title">Spotify Song Guesser</h3>
-                    <p class="project-desc">
-                        Browser game where players guess songs from short audio clips, pulling data
-                        from the Spotify API with score tracking.
-                    </p>
-                    <p class="project-tech">
-                        Tech: HTML, CSS, JS, Node.js, Spotify Web API
-                    </p>
-                    <ul class="project-meta-badges">
-                        <li class="meta-badge meta-badge--role">Role: Full-stack</li>
-                        <li class="meta-badge meta-badge--team">Team: 2 devs</li>
-                        <li class="meta-badge meta-badge--complexity">Complexity: ★★★★☆</li>
-                    </ul>
-                    <div class="project-links">
-                        <button class="project-link project-details-btn" type="button">View Details</button>
-                    </div>
-                </article>
-
-                <!-- Metroidvania Engine -->
-                <article class="project-card reveal" data-category="tool game" data-tooltip="Custom engine prototype for 2D Metroidvania.">
-                    <div class="project-tag-row">
-                        <span class="project-tag">Tool</span>
-                        <span class="project-tag">Game Engine</span>
-                    </div>
-                    <h3 class="project-title">2D Metroidvania Engine</h3>
-                    <p class="project-desc">
-                        Custom engine prototype focused on 2D side-scrolling level design, input
-                        handling, and modular gameplay systems.
-                    </p>
-                    <p class="project-tech">
-                        Tech: C++, Custom Engine, Tile Systems
-                    </p>
-                    <ul class="project-meta-badges">
-                        <li class="meta-badge meta-badge--role">Role: Engine / Systems</li>
-                        <li class="meta-badge meta-badge--team">Team: 3 devs</li>
-                        <li class="meta-badge meta-badge--complexity">Complexity: ★★★★★</li>
-                    </ul>
-                    <div class="project-links">
-                        <button class="project-link project-details-btn" type="button">View Details</button>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- TIMELINE SECTION -->
-        <section id="timeline" class="section section-dark">
-            <div class="section-header reveal">
-                <h2 class="section-title">Progression Timeline</h2>
-                <p class="section-subtitle">
-                    A quick look at how my skills and projects have leveled up over time.
-                </p>
-            </div>
-
-            <ul class="timeline-list">
-                <li class="timeline-item reveal">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">2021 – 2022</div>
-                        <h3>CS Foundations at TAMU–CC</h3>
-                        <p>Completed core CS coursework (data structures, algorithms, OS) and started experimenting with small game prototypes.</p>
-                    </div>
-                </li>
-                <li class="timeline-item reveal">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">2022 – 2023</div>
-                        <h3>Game Programming & Web Projects</h3>
-                        <p>Built Unity games, a zombie shooter prototype, and web apps including a resume builder and collection manager.</p>
-                    </div>
-                </li>
-                <li class="timeline-item reveal">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">2023 – 2024</div>
-                        <h3>Engine Work & Tools</h3>
-                        <p>Worked on a 2D Metroidvania-style engine, focused on input handling, tile systems, and modular gameplay logic.</p>
-                    </div>
-                </li>
-                <li class="timeline-item reveal">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">2024 – 2025</div>
-                        <h3>Capstone & Advanced Projects</h3>
-                        <p>Developed Guitar Legend, a rhythm game with multiple input types and custom charts, plus more tools and graphics work.</p>
-                    </div>
-                </li>
-            </ul>
-        </section>
-
-        <!-- STATS SECTION -->
-        <section id="stats" class="section section-dark">
-            <div class="section-header reveal">
-                <h2 class="section-title">Player Stats</h2>
-                <p class="section-subtitle">
-                    Casino-style rolling counters that tick up when you scroll here. Gacha luck not included.
-                </p>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-card reveal">
-                    <div class="stat-label">Years of Coding</div>
-                    <div class="stat-value">
-                        <span class="rolling-number" data-target="4">0</span>
+            <div class="contact-layout reveal">
+                <div class="side-card">
+                    <h3 class="side-title">Let's build something</h3>
+                    <p>I'm open to internships, junior roles, and collaborations on game or tool projects.</p>
+                    <div class="contact-links">
+                        <a href="https://www.linkedin.com/in/thien-hoang-059117236/" target="_blank" rel="noopener">
+                            <img src="images/icon-linkedin.svg" alt="" width="16" height="16"> LinkedIn
+                        </a>
+                        <a href="https://github.com/TomTPHoang" target="_blank" rel="noopener">
+                            <img src="images/icon-github.svg" alt="" width="16" height="16"> GitHub
+                        </a>
                     </div>
                 </div>
 
-                <div class="stat-card reveal">
-                    <div class="stat-label">Projects Completed</div>
-                    <div class="stat-value">
-                        <span class="rolling-number" data-target="15">0</span>
+                <form class="contact-form side-card" id="contactForm" novalidate>
+                    <div class="field">
+                        <label for="cfName">Name</label>
+                        <input id="cfName" name="name" type="text" autocomplete="name" required minlength="2">
+                        <span class="field-error" id="cfNameErr"></span>
                     </div>
-                </div>
-
-                <div class="stat-card reveal">
-                    <div class="stat-label">Game Prototypes</div>
-                    <div class="stat-value">
-                        <span class="rolling-number" data-target="7">0</span>
+                    <div class="field">
+                        <label for="cfEmail">Email</label>
+                        <input id="cfEmail" name="email" type="email" autocomplete="email" required>
+                        <span class="field-error" id="cfEmailErr"></span>
                     </div>
-                </div>
-
-                <div class="stat-card reveal">
-                    <div class="stat-label">Lines of Code (x1000)</div>
-                    <div class="stat-value">
-                        <span class="rolling-number" data-target="120">0</span>
+                    <div class="field">
+                        <label for="cfMsg">Message <span class="char-count"><span id="cfCount">0</span>/1000</span></label>
+                        <textarea id="cfMsg" name="message" rows="5" maxlength="1000" required></textarea>
+                        <span class="field-error" id="cfMsgErr"></span>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- RESUME SECTION -->
-        <section id="resume" class="section">
-            <div class="section-header reveal">
-                <h2 class="section-title">Resume</h2>
-                <p class="section-subtitle">
-                    Preview and download my latest resume.
-                </p>
-            </div>
-
-            <div class="resume-layout">
-                <div class="resume-actions reveal">
-                    <button id="downloadResumeBtn" class="btn primary">Download Resume (PDF)</button>
-                    <p class="resume-download-count">
-                        Downloads this session: <span id="resumeDownloadCount">0</span>
-                    </p>
-                </div>
-
-                <div class="resume-preview reveal">
-                    <iframe src="files/Tom_Hoang_Resume.pdf" title="Resume preview" loading="lazy"></iframe>
-                    <p class="resume-preview-note">
-                        If the preview doesn’t load, you can
-                        <a href="files/Tom_Hoang_Resume.pdf" target="_blank" rel="noopener">open the PDF in a new tab</a>.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- NOW PLAYING SECTION -->
-        <section id="nowPlaying" class="section section-dark">
-            <div class="section-header reveal">
-                <h2 class="section-title">Now Playing & Listening</h2>
-                <p class="section-subtitle">
-                    Live peek at my recent Steam activity and currently playing track on Spotify (when the APIs cooperate).
-                </p>
-            </div>
-
-            <div class="nowplaying-grid">
-                <div class="nowplaying-card reveal">
-                    <h3>Steam – Recently Played</h3>
-                    <div id="steamNowPlaying" class="nowplaying-body">
-                        <p class="np-loading">Loading Steam activity...</p>
-                    </div>
-                </div>
-
-                <div class="nowplaying-card reveal">
-                    <h3>Spotify – Now Playing</h3>
-                    <div id="spotifyNowPlaying" class="nowplaying-body">
-                        <p class="np-loading">Loading Spotify track...</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CONTACT SECTION -->
-        <section id="contact" class="section">
-            <div class="section-header reveal">
-                <h2 class="section-title">Contact &amp; Co-op Requests</h2>
-                <p class="section-subtitle">
-                    Want to talk games, engines, or web tools? Drop a message and I’ll get back as soon as I can.
-                </p>
-            </div>
-
-            <div class="contact-layout">
-                <div class="contact-info reveal">
-                    <h3>Let’s Collaborate</h3>
-                    <p>
-                        I’m open to internships, junior roles, and collabs on game or tool projects.
-                        Systems, gameplay, or web support for your pipeline—let’s make something cool.
-                    </p>
-                    <p class="contact-note">
-                        <!-- This form can be wired to your inbox via <span class="accent-text">Formspree</span>,
-                        custom backend, or a simple <code>mailto:</code> action. For now, it simulates a send
-                        with a confirmation message. -->
-                    </p>
-                </div>
-
-                <form id="contactForm" class="contact-form reveal" novalidate>
-                    <div class="form-row">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required placeholder="Your name">
-                        <span id="nameError" class="field-error"></span>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required placeholder="you@example.com">
-                        <span id="emailError" class="field-error"></span>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required maxlength="1000" placeholder="Tell me about your project or role..."></textarea>
-                        <div class="char-counter">
-                            <span id="messageCharCount">0</span> / 1000
-                        </div>
-                        <span id="messageError" class="field-error"></span>
-                    </div>
-
-                    <button type="submit" class="btn primary full-width">
-                        Send Message
-                    </button>
-
-                    <p id="formStatus" class="form-status" aria-live="polite"></p>
+                    <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+                    <button class="btn btn-green btn-block" type="submit" id="cfSubmit">Send message</button>
+                    <p class="form-status" id="cfStatus" role="status"></p>
                 </form>
             </div>
         </section>
     </main>
 
-    <footer class="site-footer">
-        <p>© <span id="year"></span> Tom Hoang. All rights reserved.</p>
-        <p class="footer-sub">Theme inspired by Steam / Valve UI and chiaroscuro vibes.</p>
+    <footer class="footer">
+        <div class="container footer-inner">
+            <p>© <span id="year"></span> Tom Hoang</p>
+            <p class="footer-sub">Hand-built with HTML, CSS and vanilla JS.</p>
+        </div>
     </footer>
 
-    <!-- PROJECT DETAILS MODAL -->
-    <div id="projectModal" class="modal" aria-hidden="true">
-        <div class="modal-backdrop"></div>
-        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
-            <button class="modal-close" type="button" aria-label="Close project details">×</button>
-            <h3 id="projectModalTitle" class="modal-title"></h3>
-            <p class="modal-tech"></p>
-            <p class="modal-body"></p>
-            <div class="modal-links"></div>
+    <!-- ================= GAME PAGE MODAL ================= -->
+    <div class="modal" id="gameModal" hidden>
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="gmTitle" tabindex="-1">
+            <button class="modal-close" data-close aria-label="Close">×</button>
+            <div id="gmContent"></div>
         </div>
     </div>
 
-    <!-- UI sounds (put audio files in /audio) -->
-    <audio id="uiHoverSound" src="audio/ui-hover.mp3" preload="auto"></audio>
-    <audio id="uiClickSound" src="audio/ui-click.mp3" preload="auto"></audio>
+    <!-- Achievement toasts -->
+    <div class="toasts" id="toasts" aria-live="polite"></div>
 
+    <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
