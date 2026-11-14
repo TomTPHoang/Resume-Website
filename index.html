@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="steam">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +7,21 @@
     <meta name="description" content="Tom Hoang: gameplay, systems and tools programmer. Unity / C#, C++ engine work, and a playable portfolio.">
     <meta name="theme-color" content="#171a21">
     <meta property="og:title" content="Tom Hoang | Game Programmer">
-    <meta property="og:description" content="Gameplay, systems and tools programmer. See my games and play a quick rhythm demo.">
+    <meta property="og:description" content="Gameplay, systems and tools programmer. See my games, play a rhythm demo, and tune a platformer's physics live.">
     <meta property="og:image" content="images/ThienHoang-480.jpg">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2366c0f4'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='700' font-size='15' text-anchor='middle' fill='%23171a21'%3ETH%3C/text%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script>document.documentElement.classList.add("js");</script>
+    <script>
+        (function () {
+            var d = document.documentElement, t = "steam";
+            d.classList.add("js");
+            try { var s = JSON.parse(localStorage.getItem("site-theme")); if (s === "expedition") t = s; } catch (e) {}
+            d.setAttribute("data-theme", t);
+        })();
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#featured">Skip to content</a>
@@ -22,7 +29,7 @@
     <!-- ================= TOP BAR ================= -->
     <header class="topbar" id="topbar">
         <div class="container topbar-inner">
-            <a href="#top" class="brand" aria-label="Tom Hoang, back to top">
+            <a href="#top" class="brand" id="brand" aria-label="Tom Hoang, back to top">
                 <span class="brand-mark">TH</span>
                 <span class="brand-name">Tom Hoang</span>
             </a>
@@ -31,16 +38,22 @@
                 <a href="#featured">Featured</a>
                 <a href="#library">Library</a>
                 <a href="#play">Play</a>
+                <a href="#lab">Lab</a>
                 <a href="#skills">Skills</a>
                 <a href="#journey">Journey</a>
-                <a href="#achievements">Achievements</a>
                 <a href="#resume">Resume</a>
                 <a href="#contact" class="nav-cta">Contact</a>
             </nav>
 
-            <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
-                <span></span><span></span><span></span>
-            </button>
+            <div class="topbar-tools">
+                <div class="theme-switch" role="group" aria-label="Site theme">
+                    <button type="button" data-theme-btn="steam" aria-pressed="true">Steam</button>
+                    <button type="button" data-theme-btn="expedition" aria-pressed="false">Expedition</button>
+                </div>
+                <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -48,6 +61,7 @@
         <!-- ================= PROFILE HERO ================= -->
         <section class="profile" id="top">
             <canvas class="profile-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+            <div class="hero-numeral" aria-hidden="true">XXXIII</div>
             <div class="container profile-inner">
                 <div class="avatar-wrap">
                     <div class="avatar-frame">
@@ -62,11 +76,11 @@
                     <p class="profile-summary">
                         I build gameplay systems, engine tech and tools with a focus on player feel and
                         maintainable code, from Unity rhythm games to a custom C++ engine.
-                        Scroll down to see my games, or play a quick demo right on this page.
+                        Scroll down to see my games, or play the demos right on this page.
                     </p>
                     <div class="cta-row">
                         <a class="btn btn-green" href="#featured"><span class="btn-icon" aria-hidden="true">▶</span> View my games</a>
-                        <a class="btn btn-blue" href="#play">Play the demo</a>
+                        <a class="btn btn-blue" href="#lab">Try the Feel Lab</a>
                         <a class="btn btn-ghost" href="files/Tom_Hoang_Resume.pdf" download data-resume>Resume (PDF)</a>
                     </div>
                     <div class="socials">
@@ -157,17 +171,18 @@
                     </label>
                 </div>
             </div>
+            <div class="skill-filter" id="skillFilter" hidden></div>
 
             <div class="library-grid" id="libraryGrid"></div>
             <p class="empty-state" id="libraryEmpty" hidden>No projects match that. Try another filter.</p>
         </section>
 
-        <!-- ================= PLAY: RHYTHM DEMO ================= -->
+        <!-- ================= PLAY: BEAT LANES ================= -->
         <section class="section container" id="play">
             <div class="section-head reveal">
                 <div>
                     <h2 class="section-title">Quick play: Beat Lanes</h2>
-                    <p class="section-sub">A 30-second rhythm demo built with vanilla JS, Canvas and Web Audio, a small nod to Guitar Legend.</p>
+                    <p class="section-sub">A rhythm demo built with vanilla JS, Canvas and Web Audio, a small nod to Guitar Legend.</p>
                 </div>
             </div>
 
@@ -184,28 +199,83 @@
                     <button class="game-mute" id="gameMute" aria-pressed="false" aria-label="Mute game audio">♪</button>
 
                     <div class="game-overlay" id="gameOverlay">
-                        <div class="overlay-card" id="overlayCard">
-                            <p class="overlay-kicker">Beat Lanes</p>
-                            <h3 class="overlay-title">Hit the notes on the line</h3>
-                            <p class="overlay-text">Keys <kbd>D</kbd> <kbd>F</kbd> <kbd>J</kbd> <kbd>K</kbd>, or tap the lanes.</p>
-                            <button class="btn btn-green" id="gameStart"><span class="btn-icon" aria-hidden="true">▶</span> Play</button>
-                        </div>
+                        <div class="overlay-card" id="overlayCard"></div>
                     </div>
                 </div>
 
                 <aside class="play-side">
                     <div class="side-card">
-                        <h3 class="side-title">How it works</h3>
-                        <ul class="plain-list">
-                            <li>Charts are generated from a seeded pattern that gets denser over time.</li>
-                            <li>Hits are judged against timing windows: <b class="j-perfect">Perfect</b> ±45ms, <b class="j-great">Great</b> ±90ms, <b class="j-good">Good</b> ±140ms.</li>
-                            <li>The backing beat is synthesized with Web Audio, so there are no audio files.</li>
-                        </ul>
-                    </div>
-                    <div class="side-card">
-                        <h3 class="side-title">Your best</h3>
+                        <h3 class="side-title">Best · <span id="bestLabel"></span></h3>
                         <p class="best-line"><span id="bestScore">-</span> <span class="best-grade" id="bestGrade"></span></p>
                     </div>
+                    <div class="side-card">
+                        <h3 class="side-title">Audio offset</h3>
+                        <div class="range-row">
+                            <input type="range" id="offsetRange" min="-150" max="150" step="5" value="0" aria-describedby="offsetHelp">
+                            <output id="offsetOut" for="offsetRange">0 ms</output>
+                        </div>
+                        <p class="side-note" id="offsetHelp">Always early or late? Tap along to 8 beats and I'll measure it.</p>
+                        <button class="btn btn-ghost btn-sm" id="calibrateBtn" type="button">Calibrate</button>
+                    </div>
+                    <div class="side-card">
+                        <h3 class="side-title">How it works</h3>
+                        <ul class="plain-list">
+                            <li>Charts come from seeded patterns per song and difficulty.</li>
+                            <li>Timing windows: <b class="j-perfect">Perfect</b> ±45ms, <b class="j-great">Great</b> ±90ms, <b class="j-good">Good</b> ±140ms.</li>
+                            <li>All audio is synthesized live with Web Audio.</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- ================= GAME FEEL LAB ================= -->
+        <section class="section container" id="lab">
+            <div class="section-head reveal">
+                <div>
+                    <h2 class="section-title">Game Feel Lab</h2>
+                    <p class="section-sub">A platformer test room, a nod to my Metroidvania engine. Tweak the physics live and feel the difference. Grab all 8 shards.</p>
+                </div>
+            </div>
+
+            <div class="lab-layout reveal">
+                <div class="lab-stage">
+                    <div class="lab-shell" id="labShell" tabindex="0" aria-label="Platformer test room. Arrow keys or A and D to move, Space to jump, Shift to dash, R to reset.">
+                        <canvas id="labCanvas"></canvas>
+                        <div class="game-hud lab-hud" aria-hidden="true">
+                            <div><span class="hud-label">Shards</span><span id="labShards">0/8</span></div>
+                            <div><span class="hud-label">Time</span><span id="labTime">0.00</span></div>
+                            <div><span class="hud-label">Best</span><span id="labBest">-</span></div>
+                        </div>
+                        <div class="game-overlay" id="labOverlay">
+                            <div class="overlay-card" id="labOverlayCard">
+                                <p class="overlay-kicker">Game Feel Lab</p>
+                                <h3 class="overlay-title">Collect all 8 shards</h3>
+                                <p class="overlay-text">Move <kbd>A</kbd><kbd>D</kbd> · Jump <kbd>Space</kbd> · Dash <kbd>Shift</kbd> · Reset <kbd>R</kbd><br>Walls can be slid down and jumped off.</p>
+                                <button class="btn btn-green" id="labStart" type="button"><span class="btn-icon" aria-hidden="true">▶</span> Play</button>
+                            </div>
+                        </div>
+                        <div class="touch-pad" id="labTouch">
+                            <div class="touch-group">
+                                <button type="button" data-k="left" aria-label="Move left">◀</button>
+                                <button type="button" data-k="right" aria-label="Move right">▶</button>
+                            </div>
+                            <div class="touch-group">
+                                <button type="button" data-k="dash">Dash</button>
+                                <button type="button" data-k="jump">Jump</button>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="lab-hint">Tip: turn on <b>Debug view</b> to see hitboxes, coyote time and the jump buffer as they happen.</p>
+                </div>
+
+                <aside class="lab-panel side-card" aria-label="Physics settings">
+                    <h3 class="side-title">Presets</h3>
+                    <div class="preset-row" id="labPresets"></div>
+                    <h3 class="side-title">Tuning</h3>
+                    <div class="slider-list" id="labSliders"></div>
+                    <h3 class="side-title">Juice &amp; debug</h3>
+                    <div class="toggle-list" id="labToggles"></div>
                 </aside>
             </div>
         </section>
@@ -215,21 +285,30 @@
             <div class="section-head reveal">
                 <div>
                     <h2 class="section-title">Skills &amp; tools</h2>
-                    <p class="section-sub">What I bring to a team.</p>
+                    <p class="section-sub">Click a skill to see the projects where I used it.</p>
                 </div>
             </div>
             <div class="skills-grid" id="skillsGrid"></div>
         </section>
 
-        <!-- ================= JOURNEY ================= -->
+        <!-- ================= JOURNEY MAP ================= -->
         <section class="section container" id="journey">
             <div class="section-head reveal">
                 <div>
                     <h2 class="section-title">Journey</h2>
-                    <p class="section-sub">Recent activity, newest first.</p>
+                    <p class="section-sub">Level select. Pick a stage to see what I shipped then.</p>
                 </div>
             </div>
-            <ol class="journey" id="journeyList"></ol>
+            <div class="journey-map reveal" id="journeyMap">
+                <div class="map-scroll">
+                    <div class="map-track" id="mapTrack">
+                        <svg class="map-path" id="mapPath" aria-hidden="true"></svg>
+                        <div class="map-nodes" id="mapNodes" role="tablist" aria-label="Journey stages"></div>
+                        <div class="map-marker" id="mapMarker" aria-hidden="true"></div>
+                    </div>
+                </div>
+                <div class="map-detail" id="mapDetail" role="tabpanel" aria-live="polite"></div>
+            </div>
         </section>
 
         <!-- ================= ACHIEVEMENTS ================= -->
@@ -237,7 +316,7 @@
             <div class="section-head reveal">
                 <div>
                     <h2 class="section-title">Achievements</h2>
-                    <p class="section-sub">Unlocked by exploring this site. Progress is saved in your browser.</p>
+                    <p class="section-sub">Unlocked by exploring this site. Some are hidden. Progress is saved in your browser.</p>
                 </div>
                 <div class="ach-summary">
                     <span><b id="achCount">0</b> of <b id="achTotal">0</b> unlocked</span>
@@ -269,6 +348,17 @@
                     <iframe src="files/Tom_Hoang_Resume.pdf#view=FitH" title="Resume preview" loading="lazy"></iframe>
                 </div>
             </div>
+        </section>
+
+        <!-- ================= PATCH NOTES ================= -->
+        <section class="section container" id="patch-notes">
+            <div class="section-head reveal">
+                <div>
+                    <h2 class="section-title">Patch notes</h2>
+                    <p class="section-sub">What's changed on this site.</p>
+                </div>
+            </div>
+            <div class="patch-list" id="patchList"></div>
         </section>
 
         <!-- ================= CONTACT ================= -->
@@ -319,8 +409,11 @@
 
     <footer class="footer">
         <div class="container footer-inner">
-            <p>© <span id="year"></span> Tom Hoang</p>
-            <p class="footer-sub">Hand-built with HTML, CSS and vanilla JS.</p>
+            <p>© <span id="year"></span> Tom Hoang · <a href="#patch-notes" class="version-badge" id="versionBadge">v1.0</a></p>
+            <p class="footer-sub">
+                Hand-built with HTML, CSS and vanilla JS.
+                <span class="theme-credit">Expedition theme is a fan homage to Clair Obscur: Expedition 33, not affiliated.</span>
+            </p>
         </div>
     </footer>
 
@@ -333,10 +426,23 @@
         </div>
     </div>
 
+    <!-- ================= SECRET CHEAT MENU ================= -->
+    <div class="cheat-panel" id="cheatPanel" role="dialog" aria-labelledby="cheatTitle" hidden>
+        <div class="cheat-head">
+            <h2 id="cheatTitle">Cheat menu</h2>
+            <button type="button" class="cheat-close" id="cheatClose" aria-label="Close cheat menu">×</button>
+        </div>
+        <p class="cheat-sub">↑ ↑ ↓ ↓ ← → ← → B A. Old habits die hard.</p>
+        <div class="toggle-list" id="cheatList"></div>
+    </div>
+
     <!-- Achievement toasts -->
     <div class="toasts" id="toasts" aria-live="polite"></div>
 
     <script src="data.js"></script>
     <script src="script.js"></script>
+    <script src="js/covers.js"></script>
+    <script src="js/beatlanes.js"></script>
+    <script src="js/feel-lab.js"></script>
 </body>
 </html>

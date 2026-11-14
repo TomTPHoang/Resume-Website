@@ -1,7 +1,7 @@
 /* =====================================================================
    PORTFOLIO DATA — edit this file to update the site.
    Everything on the page (featured carousel, library, game pages,
-   skills, journey) is rendered from the objects below.
+   skills, journey map, patch notes) is rendered from the objects below.
    ===================================================================== */
 
 window.PORTFOLIO = {
@@ -24,9 +24,12 @@ window.PORTFOLIO = {
          title, subtitle, year, pitch (1–2 sentences), about (paragraph)
          built      bullet list of what YOU personally built
          role, team, engine, tech[], tags[]
+         skills     names from the Skills list below. Clicking a skill
+                    filters the library to projects that list it.
          categories filter keys: game | unity | engine | web
-         hue        0–360, colour of the generated cover art (used until
-                    you add a real `cover` image)
+         art        animated placeholder cover style until you add `cover`:
+                    rhythm | metroidvania | fps | quiz | web
+         hue        0–360, main colour of the placeholder cover (Steam theme)
          cover      "images/games/guitar-legend/cover.jpg"  (16:9 works best)
          preview    short muted .mp4/.webm that plays when hovering a card
          media      gallery for the game page, any mix of:
@@ -55,7 +58,9 @@ window.PORTFOLIO = {
             engine: "Unity",
             tech: ["Unity", "C#", "ScriptableObjects", "Input System"],
             tags: ["Rhythm", "Capstone", "Unity"],
+            skills: ["Unity", "C#", "Gameplay systems", "Input systems", "UI", "Team collaboration"],
             categories: ["game", "unity"],
+            art: "rhythm",
             hue: 285,
             cover: "",
             preview: "",
@@ -81,7 +86,9 @@ window.PORTFOLIO = {
             engine: "Custom (C++)",
             tech: ["C++", "Custom Engine", "Tile Systems"],
             tags: ["Engine", "2D", "C++"],
+            skills: ["C++", "Data structures", "Memory", "Tile / ECS-style systems", "Input systems", "Gameplay systems", "Debugging", "Team collaboration"],
             categories: ["game", "engine"],
+            art: "metroidvania",
             hue: 205,
             cover: "",
             preview: "",
@@ -106,7 +113,9 @@ window.PORTFOLIO = {
             engine: "Unity",
             tech: ["Unity", "C#", "Animator", "VFX Graph"],
             tags: ["FPS", "Survival", "Unity"],
+            skills: ["Unity", "C#", "Gameplay systems", "State machines", "UI", "Rapid prototyping", "Team collaboration"],
             categories: ["game", "unity"],
+            art: "fps",
             hue: 95,
             cover: "",
             preview: "",
@@ -131,7 +140,9 @@ window.PORTFOLIO = {
             engine: "Web",
             tech: ["HTML", "CSS", "JavaScript", "Node.js", "Spotify Web API"],
             tags: ["Web", "Music", "API"],
+            skills: ["HTML / CSS / JS", "Node.js", "REST / JSON", "Responsive UI", "Team collaboration"],
             categories: ["game", "web"],
+            art: "quiz",
             hue: 145,
             cover: "",
             preview: "",
@@ -156,7 +167,9 @@ window.PORTFOLIO = {
             engine: "Web",
             tech: ["HTML", "CSS", "JavaScript"],
             tags: ["Web", "Tool"],
+            skills: ["HTML / CSS / JS", "Responsive UI", "Team collaboration"],
             categories: ["web"],
+            art: "web",
             hue: 25,
             cover: "",
             preview: "",
@@ -165,7 +178,9 @@ window.PORTFOLIO = {
         }
     ],
 
-    /* ---------- Skills ---------- */
+    /* ---------- Skills ----------
+       Item names must match the `skills` lists on games exactly for the
+       click-to-filter links to work. Skills no project lists are shown dimmed. */
     skills: [
         {
             group: "Game Programming",
@@ -185,27 +200,67 @@ window.PORTFOLIO = {
         }
     ],
 
-    /* ---------- Journey (newest first) ---------- */
+    /* ---------- Journey map (oldest first = left to right) ----------
+       games: ids of projects to link from that stage. */
     journey: [
         {
-            date: "2024 – 2025",
-            title: "Capstone & advanced projects",
-            text: "Developed Guitar Legend, a rhythm game with multiple input types and custom charts, plus more tools and graphics work."
-        },
-        {
-            date: "2023 – 2024",
-            title: "Engine work & tools",
-            text: "Worked on a 2D Metroidvania-style engine in C++, focused on input handling, tile systems, and modular gameplay logic."
+            date: "2021 – 2022",
+            stage: "Stage 1",
+            title: "CS foundations at TAMU–CC",
+            text: "Completed core CS coursework (data structures, algorithms, operating systems) and started building small game prototypes.",
+            games: []
         },
         {
             date: "2022 – 2023",
+            stage: "Stage 2",
             title: "Game programming & web projects",
-            text: "Built Unity games including a round-based zombie shooter, plus web apps like a resume builder."
+            text: "Built Unity games including a round-based zombie shooter, plus web apps like a resume builder.",
+            games: ["zombie-shooter", "resume-builder"]
         },
         {
-            date: "2021 – 2022",
-            title: "CS foundations at TAMU–CC",
-            text: "Completed core CS coursework (data structures, algorithms, operating systems) and started building small game prototypes."
+            date: "2023 – 2024",
+            stage: "Stage 3",
+            title: "Engine work & tools",
+            text: "Worked on a 2D Metroidvania-style engine in C++, focused on input handling, tile systems, and modular gameplay logic.",
+            games: ["metroidvania-engine"]
+        },
+        {
+            date: "2024 – 2025",
+            stage: "Stage 4",
+            title: "Capstone & advanced projects",
+            text: "Developed Guitar Legend, a rhythm game with multiple input types and custom charts, plus more tools and graphics work.",
+            games: ["guitar-legend"]
+        }
+    ],
+
+    /* ---------- Patch notes (newest first) ----------
+       type: new | change | fix */
+    patchNotes: [
+        {
+            version: "1.1",
+            date: "2026-11-14",
+            title: "The Lab Update",
+            notes: [
+                { type: "new", text: "Game Feel Lab: a platformer test room with live physics sliders." },
+                { type: "new", text: "Beat Lanes: 3 songs, 3 difficulties, a hit-timing graph and audio calibration." },
+                { type: "new", text: "Journey is now a clickable level-select map." },
+                { type: "new", text: "Expedition theme: switch styles from the top bar." },
+                { type: "new", text: "Click any skill to see the projects that use it." },
+                { type: "new", text: "Animated cover art and more achievements, a few of them hidden." },
+                { type: "change", text: "Patch notes now live on the site (you're reading them)." }
+            ]
+        },
+        {
+            version: "1.0",
+            date: "2026-11-13",
+            title: "Relaunch",
+            notes: [
+                { type: "new", text: "Rebuilt the whole site with a storefront look." },
+                { type: "new", text: "Featured carousel, filterable library and shareable game pages." },
+                { type: "new", text: "Beat Lanes rhythm demo and visitor achievements." },
+                { type: "change", text: "Removed skill percentage bars, vanity stats and the Now Playing panel." },
+                { type: "fix", text: "Contact form no longer pretends to send when it isn't connected." }
+            ]
         }
     ]
 };
